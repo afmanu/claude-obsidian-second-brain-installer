@@ -1,10 +1,8 @@
 {
-  "_instructions": "Copy this config into Claude Code → Settings → MCP Servers. Replace VAULT_PATH with the absolute path to your Obsidian vault folder.",
-  "obsidian-vault": {
-    "command": "npx",
-    "args": ["-y", "mcp-obsidian"],
-    "env": {
-      "VAULT_PATH": "/absolute/path/to/your/obsidian/vault"
-    }
-  }
+  "_instructions": "Run this command in your terminal (replace the path with your actual vault path). Then restart Claude Code.",
+  "_command_mac_linux": "claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest \"/path/to/your/vault\"",
+  "_command_windows": "claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest \"C:\\path\\to\\your\\vault\"",
+  "_verify": "Run 'claude mcp list' — you should see obsidian-vault listed as Connected.",
+  "_package": "@bitbonsai/mcpvault",
+  "_package_url": "https://github.com/bitbonsai/mcpvault"
 }

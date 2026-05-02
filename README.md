@@ -2,7 +2,7 @@
 
 > A second brain template for Obsidian — powered by Claude Code AI skills.
 
-Clone this repo, follow 3 setup steps, then run `/vault-install` and Claude builds your personalized vault automatically.
+Clone this repo, follow 3 setup steps, run `/vault-install`, and Claude builds your personalized vault automatically — then installs all skills directly into your vault so you never need this repo again.
 
 ---
 
@@ -22,46 +22,41 @@ Clone this repo, follow 3 setup steps, then run `/vault-install` and Claude buil
 
 ---
 
-## Before you start — 3 setup steps
+## Setup — 3 steps before running the installer
 
 ### Step 1 — Install Obsidian
 
-Download and install [Obsidian](https://obsidian.md) (free).
+Download and install [Obsidian](https://obsidian.md) (free, available for Mac, Windows, Linux).
 
-Open Obsidian → **Create new vault** → choose a folder on your computer → name it whatever you want (e.g. `my-vault`).
+Open Obsidian → **Create new vault** → choose a folder on your computer → name it whatever you want (e.g. `my-second-brain`).
 
-Leave it open. You'll point the MCP to this folder in Step 2.
+Note the full path to that folder — you'll need it in Step 2.
 
 ---
 
 ### Step 2 — Connect the Obsidian MCP
 
-The MCP is what allows Claude Code to read and write notes in your vault.
+The MCP lets Claude Code read and write notes directly in your vault.
 
-**Install the MCP package:**
+Make sure you have [Node.js](https://nodejs.org) installed, then run:
+
 ```bash
-npm install -g mcp-obsidian
+claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "/path/to/your/vault"
 ```
 
-**Add it to your Claude Code MCP settings.**
+Replace `/path/to/your/vault` with the actual path to the vault folder you created in Step 1.
 
-Open Claude Code → Settings → MCP Servers → add:
-
-```json
-{
-  "obsidian-vault": {
-    "command": "npx",
-    "args": ["-y", "mcp-obsidian"],
-    "env": {
-      "VAULT_PATH": "/absolute/path/to/your/vault"
-    }
-  }
-}
+**Example (Mac):**
+```bash
+claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "/Users/yourname/Documents/my-second-brain"
 ```
 
-Replace `/absolute/path/to/your/vault` with the actual path to the vault folder you created in Step 1.
+**Example (Windows):**
+```bash
+claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "C:\Users\yourname\Documents\my-second-brain"
+```
 
-Restart Claude Code. You should see `obsidian-vault` in your MCP list.
+Restart Claude Code. You should see `obsidian-vault` in your MCP list (`claude mcp list`).
 
 ---
 
@@ -72,7 +67,7 @@ git clone https://github.com/afmanu/obsidian-sppf-vault.git
 cd obsidian-sppf-vault
 ```
 
-Open the folder in Claude Code. The 7 skills will be available immediately as slash commands.
+Open the `obsidian-sppf-vault` folder in Claude Code.
 
 ---
 
@@ -84,7 +79,28 @@ Type in Claude Code:
 /vault-install
 ```
 
-Claude will ask you about your projects and areas, then build your personalized vault structure directly in Obsidian. Takes ~20 minutes, mostly automated.
+Claude will ask you about your projects and areas, build your vault structure in Obsidian, and install all 6 skills directly into your vault.
+
+**After installation:** open your vault folder (not this repo) in Claude Code. All skills will be available there permanently.
+
+---
+
+## How it works
+
+```
+You clone this repo → run /vault-install in Claude Code
+         ↓
+Claude asks: your projects, areas, capture style
+         ↓
+Claude writes everything into your Obsidian vault via MCP:
+  · folder structure personalized to you
+  · hub notes for each project and area
+  · Claude_Improves reference guide
+  · all 6 skills installed in your vault
+         ↓
+You close this repo. Open your vault in Claude Code.
+All skills work from there forever.
+```
 
 ---
 
@@ -92,40 +108,22 @@ Claude will ask you about your projects and areas, then build your personalized 
 
 - [Obsidian](https://obsidian.md) (free)
 - [Claude Code](https://claude.ai/code)
-- Node.js (for the MCP)
+- [Node.js](https://nodejs.org) v18+
 
 ---
 
-## How it works
+## After installation — vault structure
 
 ```
-You → /vault-install in Claude Code
-         ↓
-Claude asks: your projects, areas, capture style
-         ↓
-Claude writes structure into your Obsidian vault via MCP
-         ↓
-Your vault is ready with folders, hubs, and all 6 skills active
-```
-
-No Python. No scripts. No manual file creation. Claude does it all through the Obsidian MCP.
-
----
-
-## After installation
-
-The vault structure Claude creates:
-
-```
-01_Projects/    your active projects (personalized)
-02_Areas/       areas of responsibility (personalized)
+01_Projects/    your active projects (personalized to you)
+02_Areas/       your areas of responsibility (personalized)
 03_Knowledge/
-  Insights/
-  Soluciones/
-  Decisiones/
-  Conceptos/
+  Insights/     realizations and patterns
+  Soluciones/   fixes and workarounds
+  Decisiones/   decisions with reasoning
+  Conceptos/    frameworks and definitions
 04_Daily/       daily notes
 05_Monthly/     monthly synthesis reports
 ```
 
-Plus a `Claude_Improves/` project inside `01_Projects/` that documents every skill and how it works — your personal reference guide.
+Plus `Claude_Improves/` — a reference guide that explains every skill and how to use it.

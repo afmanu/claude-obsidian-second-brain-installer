@@ -1,6 +1,16 @@
 One-time guided setup that builds a personalized second brain vault in Obsidian.
 
-Before starting, verify the `obsidian-vault` MCP is connected by listing the vault root. If it fails, stop and tell the user to complete Step 2 in the README.
+**Before starting:** verify the `obsidian-vault` MCP is connected by calling list_directory on the vault root. If it fails, stop and show this message:
+
+```
+⚠️ The obsidian-vault MCP is not connected.
+
+Complete Step 2 in the README before running /vault-install:
+
+  claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "/path/to/your/vault"
+
+Then restart Claude Code and try again.
+```
 
 ---
 
@@ -83,7 +93,7 @@ If "what is this?": explain each folder's purpose.
 
 ---
 
-## PHASE 3 — Confirm skills and extras
+## PHASE 3 — Confirm
 
 ```
 ⚙️ Skills to install (all recommended):
@@ -102,104 +112,146 @@ Install everything? [yes / customize]
 
 ## PHASE 4 — Build the vault (automatic)
 
-Use the `obsidian-vault` MCP to create everything. Show progress as you go:
+Use the `obsidian-vault` MCP to create everything. Show a tick as each step completes.
 
+**Step 1 — Folder structure**
+
+Create a hub note for each project:
+```markdown
+---
+type: project
+name: [Project Name]
+status: active
+created: [today YYYY-MM-DD]
+tags: [project]
+---
+
+# [Project Name]
+
+## Overview
+
+## Goals
+
+## Notes
+```
+Save at `01_Projects/[project-slug]/[project-slug].md`
+
+Create a hub note for each area:
+```markdown
+---
+type: area
+name: [Area Name]
+created: [today YYYY-MM-DD]
+tags: [area]
+---
+
+# [Area Name]
+
+## Purpose
+
+## Notes
+```
+Save at `02_Areas/[area-slug]/[area-slug].md`
+
+Create placeholder notes to initialize knowledge folders:
+- `03_Knowledge/Insights/README.md` — "Capture realizations and patterns here."
+- `03_Knowledge/Soluciones/README.md` — "Document fixes and workarounds here."
+- `03_Knowledge/Decisiones/README.md` — "Log decisions with reasoning here."
+- `03_Knowledge/Conceptos/README.md` — "Define frameworks and concepts here."
+
+**Step 2 — Claude_Improves project**
+
+Create `01_Projects/Claude_Improves/Claude_Improves.md` (hub) and one doc per skill explaining what it does, how to call it, and when to use it.
+
+**Step 3 — VAULT-INDEX.md at vault root**
+
+A single index note linking to all projects and areas with wikilinks.
+
+**Step 4 — Install skills into THIS vault** ⬅️ critical step
+
+Write each skill file to `.claude/commands/` inside the vault using the MCP. This means that from now on the user works from their vault folder in Claude Code — not from this repo — and all skills remain available.
+
+Files to write:
+- `.claude/commands/second-brain-capture.md`
+- `.claude/commands/link-finder.md`
+- `.claude/commands/vault-synthesis.md`
+- `.claude/commands/forgotten-notes.md`
+- `.claude/commands/decision-tracker.md`
+- `.claude/commands/next-steps-ai.md`
+
+Use the exact content from each skill file in this repo's `.claude/commands/` folder.
+
+Also write a `CLAUDE.md` at vault root:
+```markdown
+# My Second Brain
+
+This vault is powered by Claude Code. All skills are in `.claude/commands/`.
+
+## Vault structure
+01_Projects/ — active projects
+02_Areas/    — areas of responsibility
+03_Knowledge/ — Insights / Soluciones / Decisiones / Conceptos
+04_Daily/    — daily notes
+05_Monthly/  — monthly synthesis reports
+
+## Frontmatter convention
+type: insight | solution | decision | concept | project | area | meeting | synthesis
+project: [name]
+created: [YYYY-MM-DD]
+status: active | validated | pending | archived
+```
+
+Show progress:
 ```
 🚀 Building your vault...
-```
 
-Create in this order:
+✓ [N] project hubs created
+✓ [N] area hubs created
+✓ Knowledge base initialized
+✓ Claude_Improves guide created
+✓ VAULT-INDEX.md created
+✓ Skills installed into your vault
+✓ CLAUDE.md written
 
-1. **Folder structure** — create hub notes for each folder:
-   - `01_Projects/[project-slug]/[project-slug].md` (one per project)
-   - `02_Areas/[area-slug]/[area-slug].md` (one per area)
-   - `03_Knowledge/Insights/.gitkeep` placeholder note
-   - `03_Knowledge/Soluciones/.gitkeep` placeholder note
-   - `03_Knowledge/Decisiones/.gitkeep` placeholder note
-   - `03_Knowledge/Conceptos/.gitkeep` placeholder note
-
-2. **Project hubs** — each with frontmatter:
-   ```yaml
-   ---
-   type: project
-   name: [Project Name]
-   status: active
-   created: [today]
-   tags: [project]
-   ---
-   ```
-
-3. **Area hubs** — each with frontmatter:
-   ```yaml
-   ---
-   type: area
-   name: [Area Name]
-   created: [today]
-   tags: [area]
-   ---
-   ```
-
-4. **Claude_Improves project** — create hub + one doc per skill:
-   - `01_Projects/Claude_Improves/Claude_Improves.md` (hub)
-   - `01_Projects/Claude_Improves/skill-second-brain-capture.md`
-   - `01_Projects/Claude_Improves/skill-link-finder.md`
-   - `01_Projects/Claude_Improves/skill-vault-synthesis.md`
-   - `01_Projects/Claude_Improves/skill-forgotten-notes.md`
-   - `01_Projects/Claude_Improves/skill-decision-tracker.md`
-   - `01_Projects/Claude_Improves/skill-next-steps-ai.md`
-
-   Each skill doc explains: what it does, how to use it, when to use it, example.
-
-5. **VAULT-INDEX.md** at vault root — links to all projects and areas.
-
-Show a tick as each step completes. End with:
-
-```
-✅ Vault ready! Created:
-   [N] project hubs
-   [N] area hubs
-   Knowledge base structure
-   Claude_Improves reference guide
+✅ Done!
 ```
 
 ---
 
-## PHASE 5 — First note (live demo)
+## PHASE 5 — Handoff
 
 ```
-🎉 One last thing — let's capture your first note.
+🎉 Your vault is ready in Obsidian.
 
-You mentioned you work on [project-1].
+One important step: from now on, open your VAULT folder
+(not this repo) in Claude Code. All skills will be there.
 
-Tell me one insight, decision, or challenge about it right now.
+Your vault path: [detected vault path from MCP]
+
+Want to capture your first note before we finish?
+Tell me one insight or decision from your work on [project-1].
 ```
 
-Run /second-brain-capture with their input. This shows the skill working in real time.
+Run /second-brain-capture with their input as a live demo.
 
 Then show the final screen:
 
 ```
-🧠 YOUR VAULT IS READY
+🧠 ALL DONE
 
 ✅ [N] projects set up
 ✅ [N] areas set up
 ✅ Knowledge base ready
-✅ Claude_Improves guide created
+✅ Skills installed in your vault
 ✅ First note captured
 
----
-USE DAILY:
-  /second-brain-capture "I learned X"
-  /next-steps-ai
+From now on:
+→ Open [vault-path] in Claude Code
+→ All 6 skills are available as slash commands
 
-USE WEEKLY:
-  /link-finder
-  /forgotten-notes
+DAILY:    /second-brain-capture  /next-steps-ai
+WEEKLY:   /link-finder  /forgotten-notes
+MONTHLY:  /vault-synthesis  /decision-tracker
 
-USE MONTHLY:
-  /vault-synthesis
-  /decision-tracker
-
-Everything is in your Obsidian vault. Open it and explore.
 Happy capturing! 🧠
 ```
