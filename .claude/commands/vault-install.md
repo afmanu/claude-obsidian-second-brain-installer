@@ -1,33 +1,46 @@
 # /vault-install
 
-You are running the vault installation wizard. Follow these 5 phases exactly, in order.
+You are running the vault installation wizard.
+
+This command runs only after the `obsidian-vault` MCP connection has been configured and verified.
+
+Follow these 5 phases exactly, in order.
+
+---
+
+## Preconditions
+
+Before starting, confirm that:
+
+1. `[VAULT_PATH]` is known.
+2. `[VAULT_PATH]` exists.
+3. The `obsidian-vault` MCP can list the vault root.
+4. The repository files are available to read from the installer repository.
+
+If any precondition fails, stop and repair setup before continuing.
 
 ---
 
 ## PHASE 1 — DIAGNOSIS
 
-Ask the user these 3 questions, one at a time (wait for each answer):
+Ask the user these 3 questions, one at a time. Wait for each answer before asking the next question.
 
 **Question 1:** "What is the main reason you want a second brain? What problem are you trying to solve?"
 
 **Question 2:** "Describe your daily work or life in 2-3 sentences. What do you mostly do?"
 
-**Question 3:** "What kind of information do you capture most? (meetings, ideas, code, notes from books, personal goals, tasks...)"
+**Question 3:** "What kind of information do you capture most? Examples: meetings, ideas, code, notes from books, personal goals, tasks, decisions, client notes."
 
-After receiving all 3 answers, run the internal profile matching below silently. Do NOT show this logic to the user.
+After receiving all 3 answers, run the internal profile matching below silently. Do not show this scoring logic to the user.
 
 ---
 
-### INTERNAL PROFILE MATCHING (silent)
+### INTERNAL PROFILE MATCHING — silent
 
-Read all 6 profiles from `profiles/` in this repo. Match user answers against the "Diagnostic Questions" section in each profile file.
+Read all 6 profiles from `profiles/` in this repository.
 
-Score each profile 0-100 based on keyword and intent matching:
-- Exact keyword match = +25 points
-- Intent/concept match = +15 points
-- Contradicting signal = -20 points
+Profile files to read:
 
-**Profile files to read:**
 - `profiles/consultant.md`
 - `profiles/developer.md`
 - `profiles/researcher.md`
@@ -35,96 +48,164 @@ Score each profile 0-100 based on keyword and intent matching:
 - `profiles/student.md`
 - `profiles/personal.md`
 
-Select the top-scoring profile. Store as [PROFILE].
+Match the user's answers against the "Diagnostic Questions" section in each profile file.
 
-Also extract from user answers:
-- [PROJECTS]: list of projects/areas they mentioned (e.g. "my startup", "Python course", "client XYZ")
-- [AREAS]: life/work areas they mentioned (e.g. "health", "finance", "marketing")
+Score each profile from 0 to 100:
+
+- Exact keyword match: +25 points
+- Intent or concept match: +15 points
+- Contradicting signal: -20 points
+
+Select the top-scoring profile and store it as `[PROFILE]`.
+
+Also extract:
+
+- `[PROJECTS]`: projects, clients, courses, products, or major initiatives the user mentioned.
+- `[AREAS]`: life or work areas the user mentioned.
+- `[PROFILE_REASON]`: 2-4 plain-language reasons why this profile fits.
+- `[PROFILE_CONFIDENCE]`: High, Medium, or Low.
+
+If confidence is low, explicitly show the top 2 possible profiles and ask the user to choose.
 
 ---
 
 ## PHASE 2 — STRUCTURE PROPOSAL
 
-Present the recommended structure. Say:
+Present the recommended structure.
 
-```
-Based on what you told me, you're a [profile description in plain words].
+Say:
 
-I recommend the [PROFILE NAME] structure:
+```text
+Based on what you told me, I recommend the [PROFILE] profile.
 
-[Show the folder tree from the profile file, personalized with their actual projects/areas]
+Why:
+- [reason 1]
+- [reason 2]
+- [reason 3]
 
-For example, since you mentioned [their specific project], I'd create:
-  [concrete example folder path]
+Confidence: [PROFILE_CONFIDENCE]
+
+Recommended structure:
+
+[Show the folder tree from the selected profile file, personalized with the user's actual projects, clients, products, courses, or areas when possible.]
+
+For example, since you mentioned [specific project/client/product/course/area], I would create:
+[concrete example folder path]
 
 Does this structure work, or would you like to adjust anything?
 ```
 
-If user wants to adjust: accept changes and update the proposed structure. Store final structure as [STRUCTURE].
+If the user wants to adjust, accept changes and update the proposed structure.
 
-Also show this at the bottom:
-```
-Not what you expected? Other available profiles:
-- Consultant (clients + projects + operations)
-- Developer (codebase + solutions + learning)
-- Researcher (Zettelkasten: literature + permanent notes)
-- Entrepreneur (strategy + products + customers)
-- Student (courses + concepts + exams)
-- Personal (journal + goals + life areas)
+Store the final structure as `[STRUCTURE]`.
+
+Also show:
+
+```text
+Other available profiles:
+- Consultant: clients, projects, proposals, meetings, operations
+- Developer: codebase, bugs, patterns, architecture, learning
+- Researcher: literature notes, permanent notes, arguments, sources
+- Entrepreneur: strategy, products, customers, marketing, finance
+- Student: courses, concepts, exercises, exams, resources
+- Personal: journal, goals, habits, life areas, reflections
 ```
 
 ---
 
-## PHASE 3 — CONFIRM + LANGUAGE
+## PHASE 3 — CONFIRM LANGUAGE
 
 Ask:
 
-**"One last thing — what language would you like for your vault?"**
-```
-A) English  — all folders and notes in English
-B) Spanish  — todas las carpetas y notas en español
-C) Mixed    — English structure, Spanish note content
+```text
+What language would you like for your vault?
+
+A) English — all folders and notes in English
+B) Spanish — todas las carpetas y notas en español
+C) Mixed — English structure, Spanish note content
 ```
 
-Wait for their choice. Store as [LANG].
+Wait for the user's choice.
 
-Apply the language mapping from the selected profile file (`profiles/[profile].md`, section "Language Mapping") to all folder names and note content.
+Store it as `[LANG]`.
+
+Apply the language mapping from the selected profile file, section "Language Mapping", to all folder names and note content.
 
 Then confirm:
 
+```text
+Here is what I will build:
+
+Profile: [PROFILE]
+Language: [LANG]
+Structure:
+[final folder list with language-mapped names]
+
+Core vault skills to install:
+- /second-brain-capture
+- /link-finder
+- /vault-synthesis
+- /next-steps-ai
+- /explore-skills
+
+I will also install:
+- CLAUDE.md inside the final vault
+- .claude/vault-profile.md
+- docs/skills-catalog.md
+
+Ready to build? [yes / adjust]
 ```
-Perfect! Here's what I'll build:
 
-📦 PROFILE: [profile name]
-📁 STRUCTURE: [final folder list with language-mapped names]
-🌐 LANGUAGE: [their choice]
+If the user chooses adjust, apply the requested changes and confirm again.
 
-Skills I'll install:
-✅ /second-brain-capture — capture anything → routed to the right place automatically
-✅ /link-finder — find orphan notes and suggest connections
-✅ /vault-synthesis — generate monthly knowledge reports
-✅ /next-steps-ai — AI-ranked next steps based on vault state
-✅ /explore-skills — browse and install additional skills
-
-Ready to build? [Yes / Adjust something]
-```
+Do not build until the user confirms.
 
 ---
 
 ## PHASE 4 — BUILD
 
-Once user confirms, execute all steps silently and fast.
+Once the user confirms, execute all steps in order.
 
-### Step 1 — Create folder structure
+Use the filesystem Write tool for configuration files and command files.
+Use the `obsidian-vault` MCP for Obsidian notes.
 
-Use the **Write tool** (filesystem) to create a `.gitkeep` in each folder:
-`[VAULT_PATH]/[folder]/.gitkeep`
+---
 
-Create all folders from [STRUCTURE] using the language-mapped names from `profiles/[PROFILE].md`.
+### Step 1 — Create required system folders
 
-### Step 2 — Save vault profile config
+Use the filesystem Write tool to create `.gitkeep` files in these folders:
 
-Use the **obsidian-vault MCP** (`mcp__obsidian-vault__write_note`) to create `[VAULT_PATH]/.claude/vault-profile.md`:
+```text
+[VAULT_PATH]/.claude/.gitkeep
+[VAULT_PATH]/.claude/commands/.gitkeep
+[VAULT_PATH]/docs/.gitkeep
+```
+
+---
+
+### Step 2 — Create personalized folder structure
+
+Create all folders from `[STRUCTURE]` using the language-mapped names from the selected profile.
+
+Use the filesystem Write tool to create a `.gitkeep` in each folder:
+
+```text
+[VAULT_PATH]/[folder]/.gitkeep
+```
+
+If a folder includes user-specific names, use the actual names provided by the user.
+
+---
+
+### Step 3 — Create `.claude/vault-profile.md`
+
+Use the filesystem Write tool, not the MCP, to create:
+
+```text
+[VAULT_PATH]/.claude/vault-profile.md
+```
+
+Content:
 
 ```markdown
 ---
@@ -139,11 +220,14 @@ created: [today's date]
 ## Profile
 [PROFILE]
 
+## Profile Reason
+[PROFILE_REASON]
+
 ## Language
 [LANG]
 
 ## Structure
-[list of all created folders with their language-mapped names]
+[list of all created folders with language-mapped names]
 
 ## Routing Rules
 [copy the full "Routing Rules" table from profiles/[PROFILE].md]
@@ -152,13 +236,94 @@ created: [today's date]
 [copy the full "Link Rules" table from profiles/[PROFILE].md]
 ```
 
-This file is the source of truth for all skills. Every skill reads it to know where to route notes and what links to create.
+This file is the source of truth for all skills.
 
-### Step 3 — Create Home note
+Every skill must read it before routing notes, suggesting links, or creating reports.
 
-Use the **obsidian-vault MCP** to create `Home.md` in the vault root.
+---
 
-Content should be in [LANG]. Use the main hub notes from `profiles/[PROFILE].md` as the quick links.
+### Step 4 — Create final vault `CLAUDE.md`
+
+Use the filesystem Write tool to create:
+
+```text
+[VAULT_PATH]/CLAUDE.md
+```
+
+Content:
+
+```markdown
+# Claude Obsidian Second Brain Vault
+
+You are operating inside the user's Obsidian vault.
+
+Before making profile-aware decisions, always read:
+
+`.claude/vault-profile.md`
+
+## Operating Rules
+
+- Use the `obsidian-vault` MCP to read and write Obsidian notes.
+- Use the filesystem Write tool for `.claude/`, command files, docs, and configuration files.
+- Respect the user's selected language.
+- Propose before creating notes: show title, type, folder, and likely links.
+- Never delete notes or configuration without explicit confirmation.
+- Never ask the user to store passwords, seed phrases, private keys, API keys, or sensitive credentials in the vault.
+
+## Installed Commands
+
+- `/second-brain-capture` — capture and route notes
+- `/link-finder` — find orphan notes and suggest links
+- `/vault-synthesis` — generate synthesis reports
+- `/next-steps-ai` — suggest next actions by impact
+- `/explore-skills` — browse and build additional skills
+```
+
+---
+
+### Step 5 — Copy core skills into the final vault
+
+Read each command file from this installer repository and write it to the final vault:
+
+```text
+.claude/commands/second-brain-capture.md -> [VAULT_PATH]/.claude/commands/second-brain-capture.md
+.claude/commands/link-finder.md -> [VAULT_PATH]/.claude/commands/link-finder.md
+.claude/commands/vault-synthesis.md -> [VAULT_PATH]/.claude/commands/vault-synthesis.md
+.claude/commands/next-steps-ai.md -> [VAULT_PATH]/.claude/commands/next-steps-ai.md
+.claude/commands/explore-skills.md -> [VAULT_PATH]/.claude/commands/explore-skills.md
+```
+
+Do not summarize or rewrite these files unless the user explicitly asks. Copy their full contents.
+
+---
+
+### Step 6 — Copy the skills catalog into the final vault
+
+Read from this installer repository:
+
+```text
+docs/skills-catalog.md
+```
+
+Write the full content to:
+
+```text
+[VAULT_PATH]/docs/skills-catalog.md
+```
+
+This is required because `/explore-skills` depends on this file after handoff.
+
+---
+
+### Step 7 — Create `Home.md`
+
+Use the `obsidian-vault` MCP to create `Home.md` in the vault root.
+
+Content should be in `[LANG]`.
+
+Use the selected profile's hub notes and top-level folders as quick links.
+
+Suggested structure:
 
 ```markdown
 ---
@@ -167,75 +332,103 @@ profile: [PROFILE]
 created: [today]
 ---
 
-# 🧠 Second Brain
+# Second Brain
 
 ## Quick Access
 [links to top-level folders using language-mapped names]
 
-## Active [Projects/Proyectos/Proyectos]
-[if user mentioned specific projects, list them here as wikilinks]
+## Active Projects / Areas
+[if user mentioned specific projects, clients, products, courses, or areas, list them as wikilinks]
 
 ## This Week
 (update weekly)
 ```
 
-### Step 4 — Create hub notes
+---
 
-Use the **obsidian-vault MCP** to create the hub notes defined in `profiles/[PROFILE].md`, section "Hub Notes to Create".
+### Step 8 — Create hub notes
 
-For each hub note, personalize with the user's actual projects/areas from [PROJECTS] and [AREAS].
+Use the `obsidian-vault` MCP to create the hub notes defined in the selected profile file, section "Hub Notes to Create".
 
-### Step 5 — Create onboarding note
+For each hub note:
 
-Use the **obsidian-vault MCP** to create `00_START_HERE.md`:
+1. Use the mapped language when needed.
+2. Personalize with the user's actual projects, clients, products, courses, or areas.
+3. Include useful backlinks to top-level folders.
 
-Content in [LANG] explaining:
-- Their profile and what it's optimized for
-- Folder structure and what goes where
-- How `/second-brain-capture` automatically routes notes for their profile
-- The 5 available skills
-- "Try capturing your first note: type `/second-brain-capture` and tell me something you learned or decided recently"
+---
 
-### Step 6 — Install skills permanently into vault
+### Step 9 — Create onboarding note
 
-Use the **Write tool** (filesystem) to copy all skills into `[VAULT_PATH]/.claude/commands/`.
+Use the `obsidian-vault` MCP to create:
 
-Read each file first, then write to the vault path:
-- `second-brain-capture.md` → `[VAULT_PATH]/.claude/commands/second-brain-capture.md`
-- `link-finder.md` → `[VAULT_PATH]/.claude/commands/link-finder.md`
-- `vault-synthesis.md` → `[VAULT_PATH]/.claude/commands/vault-synthesis.md`
-- `next-steps-ai.md` → `[VAULT_PATH]/.claude/commands/next-steps-ai.md`
-- `explore-skills.md` → `[VAULT_PATH]/.claude/commands/explore-skills.md`
+```text
+00_START_HERE.md
+```
 
-Also copy the vault-profile config:
-- `[VAULT_PATH]/.claude/vault-profile.md` (created in Step 2)
+Content in `[LANG]` explaining:
+
+- what this vault is for,
+- which profile was selected,
+- what the folder structure means,
+- how `/second-brain-capture` routes notes,
+- what the 5 core vault skills do,
+- how to open the vault in Claude Code,
+- how to capture the first note.
+
+---
+
+### Step 10 — Verify final vault output contract
+
+Before handoff, verify that the final vault contains:
+
+```text
+[VAULT_PATH]/CLAUDE.md
+[VAULT_PATH]/Home.md
+[VAULT_PATH]/00_START_HERE.md
+[VAULT_PATH]/docs/skills-catalog.md
+[VAULT_PATH]/.claude/vault-profile.md
+[VAULT_PATH]/.claude/commands/second-brain-capture.md
+[VAULT_PATH]/.claude/commands/link-finder.md
+[VAULT_PATH]/.claude/commands/vault-synthesis.md
+[VAULT_PATH]/.claude/commands/next-steps-ai.md
+[VAULT_PATH]/.claude/commands/explore-skills.md
+[all folders from STRUCTURE]
+```
+
+If any required file or folder is missing, repair it before handoff.
+
+If repair fails, clearly tell the user what is missing.
 
 ---
 
 ## PHASE 5 — HANDOFF
 
-After all steps complete, say:
+After verification succeeds, say:
 
-```
-✅ Your second brain is ready!
+```text
+Your second brain is ready.
 
 Profile: [PROFILE]
 Language: [LANG]
+Vault path: [VAULT_PATH]
 
 What was built:
-📁 [list all folders]
-📝 Home.md + 00_START_HERE.md
-📝 [hub notes created]
-⚡ 5 skills installed and profile-aware
+- Personalized folder structure
+- Home.md
+- 00_START_HERE.md
+- Profile-aware CLAUDE.md
+- .claude/vault-profile.md
+- Core vault skills
+- Skills catalog
+- Hub notes for your selected profile
 
----
+From now on, open your vault directly in Claude Code:
 
-🎯 Your skills now know your structure.
+claude "[VAULT_PATH]"
 
-When you use /second-brain-capture, notes go automatically to the right folder
-and get linked to the right places — based on your [PROFILE] profile.
+Do not keep working from this installer repository unless you want to update or reinstall the system.
 
-Try it now: tell me something you learned, decided, or want to remember.
+Try your first capture now:
+Use /second-brain-capture and tell me something you learned, decided, or want to remember.
 ```
-
-**Important:** From now on, open your Obsidian vault folder in Claude Code (`claude /path/to/vault`), not this repo. Your skills and profile config live in the vault.
