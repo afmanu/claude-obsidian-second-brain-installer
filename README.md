@@ -1,36 +1,45 @@
 # 🧠 obsidian-second-brain
 
-> A second brain template for Obsidian — powered by Claude Code AI skills.
+> Build your second brain in Obsidian, guided step by step by Claude Code.
 
-Clone this repo, follow 3 setup steps, run `/vault-install`, and Claude builds your personalized vault automatically — then installs all skills directly into your vault so you never need this repo again.
+Clone this repo, follow 3 setup steps, and run `/vault-install`. Claude will ask you about your projects and areas, then build your personalized vault structure automatically — folders, hub notes, knowledge base, and all. Skills are installed directly in your vault so you never need this repo again.
 
 ---
 
 ## What you get
 
-**6 AI skills** that run inside Claude Code and write directly into your Obsidian vault:
+### Core skills (installed automatically)
 
 | Skill | What it does |
 |---|---|
-| `/vault-install` | One-time guided setup — builds your vault in ~20 min |
-| `/second-brain-capture` | Capture insights/decisions → linked note in <2s |
-| `/link-finder` | Find orphan notes + suggest connections with % score |
-| `/vault-synthesis` | Monthly report: patterns, insights, recommendations |
-| `/forgotten-notes` | Resurface old notes ranked by relevance |
-| `/decision-tracker` | Audit past decisions + success rate by category |
-| `/next-steps-ai` | Suggest 3-5 next steps ordered by impact |
+| `/second-brain-capture` | Capture an insight, decision, or solution → linked note in seconds |
+| `/link-finder` | Find orphan notes and suggest connections with confidence scores |
+| `/vault-synthesis` | Generate a synthesis report: patterns, insights, recommendations |
+| `/next-steps-ai` | Suggest your next 3-5 actions ordered by impact |
+| `/explore-skills` | Browse the skills catalog and build new skills on demand |
+
+### Skills catalog
+
+`/explore-skills` opens a catalog of additional skills you can build at any time:
+
+- `/forgotten-notes` — resurface old notes by relevance
+- `/decision-tracker` — audit past decisions and success rates
+- `/daily-note` — create today's note from a template
+- `/project-health` — flag stalled projects
+- `/weekly-review` — guided weekly review
+- `/capture-from-url` — turn any URL into a vault note
+- `/meeting-recap` — structure raw meeting notes
+- *...and any skill you design yourself*
 
 ---
 
-## Setup — 3 steps before running the installer
+## Setup — 3 steps
 
 ### Step 1 — Install Obsidian
 
-Download and install [Obsidian](https://obsidian.md) (free, available for Mac, Windows, Linux).
+Download [Obsidian](https://obsidian.md) (free, Mac / Windows / Linux).
 
-Open Obsidian → **Create new vault** → choose a folder on your computer → name it whatever you want (e.g. `my-second-brain`).
-
-Note the full path to that folder — you'll need it in Step 2.
+Open Obsidian → **Create new vault** → choose a folder → note the full path to that folder.
 
 ---
 
@@ -38,29 +47,27 @@ Note the full path to that folder — you'll need it in Step 2.
 
 The MCP lets Claude Code read and write notes directly in your vault.
 
-Make sure you have [Node.js](https://nodejs.org) installed, then run:
+Requires [Node.js](https://nodejs.org) v18+. Then run:
 
 ```bash
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "/path/to/your/vault"
 ```
 
-Replace `/path/to/your/vault` with the actual path to the vault folder you created in Step 1.
-
-**Example (Mac):**
+**Mac example:**
 ```bash
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "/Users/yourname/Documents/my-second-brain"
 ```
 
-**Example (Windows):**
+**Windows example:**
 ```bash
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "C:\Users\yourname\Documents\my-second-brain"
 ```
 
-Restart Claude Code. You should see `obsidian-vault` in your MCP list (`claude mcp list`).
+Restart Claude Code. Verify with `claude mcp list` — you should see `obsidian-vault` as Connected.
 
 ---
 
-### Step 3 — Clone this repo and open in Claude Code
+### Step 3 — Clone and open in Claude Code
 
 ```bash
 git clone https://github.com/afmanu/obsidian-sppf-vault.git
@@ -73,33 +80,37 @@ Open the `obsidian-sppf-vault` folder in Claude Code.
 
 ## Run the installer
 
-Type in Claude Code:
-
 ```
 /vault-install
 ```
 
-Claude will ask you about your projects and areas, build your vault structure in Obsidian, and install all 6 skills directly into your vault.
+Claude will guide you through 5 steps:
+1. **Discovery** — your role, projects, areas, capture style
+2. **Structure design** — review and adjust your vault layout
+3. **Personalize** — language, extras
+4. **Build** — automatic: creates all folders, hub notes, knowledge base
+5. **Handoff** — skills installed in your vault, first note captured live
 
-**After installation:** open your vault folder (not this repo) in Claude Code. All skills will be available there permanently.
+**After installation:** open your vault folder in Claude Code. This repo can be deleted — everything is in your vault.
 
 ---
 
 ## How it works
 
 ```
-You clone this repo → run /vault-install in Claude Code
+Clone repo → connect MCP → run /vault-install
          ↓
-Claude asks: your projects, areas, capture style
+Claude asks about your projects and areas
          ↓
-Claude writes everything into your Obsidian vault via MCP:
-  · folder structure personalized to you
-  · hub notes for each project and area
+Claude builds your vault structure via MCP:
+  · personalized folders and hub notes
+  · knowledge base (Insights, Decisions, Solutions, Concepts)
+  · VAULT-INDEX.md linking everything
   · Claude_Improves reference guide
-  · all 6 skills installed in your vault
          ↓
-You close this repo. Open your vault in Claude Code.
-All skills work from there forever.
+Claude installs all skills in your vault/.claude/commands/
+         ↓
+Open your vault in Claude Code. Done forever.
 ```
 
 ---
@@ -109,21 +120,3 @@ All skills work from there forever.
 - [Obsidian](https://obsidian.md) (free)
 - [Claude Code](https://claude.ai/code)
 - [Node.js](https://nodejs.org) v18+
-
----
-
-## After installation — vault structure
-
-```
-01_Projects/    your active projects (personalized to you)
-02_Areas/       your areas of responsibility (personalized)
-03_Knowledge/
-  Insights/     realizations and patterns
-  Soluciones/   fixes and workarounds
-  Decisiones/   decisions with reasoning
-  Conceptos/    frameworks and definitions
-04_Daily/       daily notes
-05_Monthly/     monthly synthesis reports
-```
-
-Plus `Claude_Improves/` — a reference guide that explains every skill and how to use it.

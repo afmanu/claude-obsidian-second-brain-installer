@@ -1,18 +1,18 @@
-Generate a monthly synthesis report with patterns, insights, and actionable recommendations.
+Generate a synthesis report of your vault with patterns, insights, and actionable recommendations.
 
-Runs automatically on the 1st of each month, or on-demand when called.
+Run on-demand whenever you want a review of your knowledge base.
 
 ---
 
 ## Steps
 
-**1. Collect** — use `obsidian-vault` MCP to get all notes from the previous month (or current month if on-demand).
+**1. Collect** — use `obsidian-vault` MCP to get all notes from the last 30 days (or a period the user specifies).
 
 **2. Analyze:**
 - Recurring keywords and themes → patterns
 - Notes with `type: insight` → key learnings
 - Notes with `type: decision` → outcomes (if annotated)
-- Projects with most activity
+- Projects with most activity vs. stalled ones
 
 **3. Create report** via MCP at `05_Monthly/[YYYY-MM]-synthesis.md`:
 
@@ -36,7 +36,7 @@ tags: [monthly, synthesis]
 - **[Decision]:** ✓ GOOD / ❌ BAD / ⏳ PENDING
 
 ## PROJECT HEALTH
-| Project | Notes this month | Status |
+| Project | Notes this period | Status |
 |---|---|---|
 
 ## RECOMMENDATIONS

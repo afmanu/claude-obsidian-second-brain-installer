@@ -1,16 +1,17 @@
 # obsidian-second-brain
 
-This repo gives Claude Code 7 slash commands that build and operate a second brain inside the user's Obsidian vault. All commands use the `obsidian-vault` MCP to read and write notes directly in Obsidian.
+This repo gives Claude Code slash commands to build and operate a second brain inside the user's Obsidian vault. All note operations use the `obsidian-vault` MCP.
 
 ---
 
 ## Context
 
 **Vault MCP:** `obsidian-vault` (must be connected before any skill runs)
-**Vault structure (after install):**
+
+**Vault structure (created by /vault-install):**
 ```
-01_Projects/    active projects
-02_Areas/       areas of responsibility  
+01_Projects/    active projects — each has a hub note
+02_Areas/       areas of responsibility — each has a hub note
 03_Knowledge/   Insights / Soluciones / Decisiones / Conceptos
 04_Daily/       daily notes
 05_Monthly/     monthly synthesis reports
@@ -29,25 +30,26 @@ tags: []
 
 ---
 
-## Available skills
+## Skills in this repo
 
-All skills are in `.claude/commands/`. They are invoked as slash commands:
+| Command | Purpose |
+|---|---|
+| `/vault-install` | One-time guided setup — run this first |
+| `/second-brain-capture` | Capture insight/solution/decision as a linked note |
+| `/link-finder` | Find orphan notes and suggest connections |
+| `/vault-synthesis` | Generate synthesis report of the vault |
+| `/next-steps-ai` | Suggest next steps by impact |
+| `/explore-skills` | Browse the skills catalog and build new skills |
 
-- `/vault-install` — one-time guided setup
-- `/second-brain-capture` — capture insight/solution/decision
-- `/link-finder` — find orphans and suggest links
-- `/vault-synthesis` — generate monthly report
-- `/forgotten-notes` — resurface old relevant notes
-- `/decision-tracker` — audit decisions and outcomes
-- `/next-steps-ai` — suggest next steps by impact
+More skills are available in `docs/skills-catalog.md` — the user can ask Claude to build any of them.
 
 ---
 
-## Important behavior
+## Key rules
 
-- **Always use the `obsidian-vault` MCP** to read/write notes — never create local files
-- **Ask before creating** — propose title, type and folder, wait for confirmation
-- **Auto-link** — after creating a note, search for 3-5 related notes and add wikilinks
-- **Respect the structure** — always place notes in the correct folder by type
+- **Always use the `obsidian-vault` MCP** to read/write Obsidian notes
+- **Use the Write tool directly** for `.claude/commands/` and `CLAUDE.md` files — these are filesystem files, not Obsidian notes
+- **Ask before creating notes** — propose title, type, folder; wait for confirmation
+- **Auto-link** — after creating a note, find 3-5 related notes and add wikilinks
 - **Never delete** without explicit user confirmation
-- **Personalize** — use the user's actual project and area names, not generic placeholders
+- **Personalize** — use the user's actual project/area names, never generic placeholders
