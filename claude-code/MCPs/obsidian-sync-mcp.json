@@ -1,0 +1,28 @@
+{
+  "name": "obsidian-sync-mcp",
+  "description": "Real-time bidirectional sync between Obsidian vault and Claude Code",
+  "type": "mcp-server",
+  "trigger": "always-on",
+  "direction": "bidirectional",
+  "notes": {
+    "obsidian_to_claude": "When user edits and saves a note in Obsidian, MCP syncs it to Claude context within 1 second",
+    "claude_to_obsidian": "When a skill creates or modifies a note, MCP pushes it to Obsidian automatically",
+    "restriction": "Only syncs on explicit user edit or skill action — no spontaneous changes"
+  },
+  "setup_instructions": [
+    "1. Install obsidian-vault MCP in Claude Code settings",
+    "2. Point vault_path to your vault directory",
+    "3. Restart Claude Code"
+  ],
+  "config_example": {
+    "mcpServers": {
+      "obsidian-vault": {
+        "command": "npx",
+        "args": ["-y", "mcp-obsidian"],
+        "env": {
+          "VAULT_PATH": "/path/to/your/vault"
+        }
+      }
+    }
+  }
+}

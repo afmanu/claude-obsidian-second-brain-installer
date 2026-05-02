@@ -1,0 +1,29 @@
+# Obsidian
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+
+# Claude Code
+.claude/
+
+# Personal vault data (never commit user content)
+vault/01_Projects/*/
+vault/02_Areas/*/
+vault/04_Daily/
+vault/05_Monthly/
+!vault/01_Projects/_TEMPLATE-project/
+!vault/01_Projects/Claude_Improves/
+!vault/02_Areas/_TEMPLATE-area/
