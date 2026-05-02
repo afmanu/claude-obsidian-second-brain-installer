@@ -8,6 +8,26 @@ Follow these 5 phases exactly, in order.
 
 ---
 
+## Reference Specs
+
+Before doing anything else, read these repository specs:
+
+```text
+specs/vault-output-contract.md
+specs/frontmatter-schema.md
+specs/command-contracts.md
+```
+
+Use them as source of truth:
+
+- `specs/vault-output-contract.md` defines the final vault output contract.
+- `specs/frontmatter-schema.md` defines generated note metadata and note structure.
+- `specs/command-contracts.md` defines required command behavior.
+
+If anything in this command conflicts with the specs, follow the specs unless the user explicitly requests a different behavior.
+
+---
+
 ## Preconditions
 
 Before starting, confirm that:
@@ -16,6 +36,10 @@ Before starting, confirm that:
 2. `[VAULT_PATH]` exists.
 3. The `obsidian-vault` MCP can list the vault root.
 4. The repository files are available to read from the installer repository.
+5. The repository specs can be read:
+   - `specs/vault-output-contract.md`
+   - `specs/frontmatter-schema.md`
+   - `specs/command-contracts.md`
 
 If any precondition fails, stop and repair setup before continuing.
 
@@ -153,6 +177,9 @@ I will also install:
 - .claude/vault-profile.md
 - docs/skills-catalog.md
 
+I will verify the final vault against:
+- specs/vault-output-contract.md
+
 Ready to build? [yes / adjust]
 ```
 
@@ -168,6 +195,9 @@ Once the user confirms, execute all steps in order.
 
 Use the filesystem Write tool for configuration files and command files.
 Use the `obsidian-vault` MCP for Obsidian notes.
+Use `specs/frontmatter-schema.md` when creating generated notes.
+Use `specs/command-contracts.md` when installing or describing commands.
+Use `specs/vault-output-contract.md` when validating the final vault.
 
 ---
 
@@ -234,9 +264,14 @@ created: [today's date]
 
 ## Link Rules
 [copy the full "Link Rules" table from profiles/[PROFILE].md]
+
+## Reference Specs
+- specs/vault-output-contract.md
+- specs/frontmatter-schema.md
+- specs/command-contracts.md
 ```
 
-This file is the source of truth for all skills.
+This file is the source of truth for all skills inside the final vault.
 
 Every skill must read it before routing notes, suggesting links, or creating reports.
 
@@ -267,6 +302,8 @@ Before making profile-aware decisions, always read:
 - Use the filesystem Write tool for `.claude/`, command files, docs, and configuration files.
 - Respect the user's selected language.
 - Propose before creating notes: show title, type, folder, and likely links.
+- Use the note metadata patterns defined during installation.
+- Follow the installed command contracts.
 - Never delete notes or configuration without explicit confirmation.
 - Never ask the user to store passwords, seed phrases, private keys, API keys, or sensitive credentials in the vault.
 
@@ -294,6 +331,8 @@ Read each command file from this installer repository and write it to the final 
 ```
 
 Do not summarize or rewrite these files unless the user explicitly asks. Copy their full contents.
+
+The installed commands must follow `specs/command-contracts.md`.
 
 ---
 
@@ -323,6 +362,8 @@ Content should be in `[LANG]`.
 
 Use the selected profile's hub notes and top-level folders as quick links.
 
+Use frontmatter compatible with `specs/frontmatter-schema.md`.
+
 Suggested structure:
 
 ```markdown
@@ -330,6 +371,7 @@ Suggested structure:
 type: hub
 profile: [PROFILE]
 created: [today]
+tags: [hub, home]
 ---
 
 # Second Brain
@@ -352,9 +394,10 @@ Use the `obsidian-vault` MCP to create the hub notes defined in the selected pro
 
 For each hub note:
 
-1. Use the mapped language when needed.
-2. Personalize with the user's actual projects, clients, products, courses, or areas.
-3. Include useful backlinks to top-level folders.
+1. Use frontmatter compatible with `specs/frontmatter-schema.md`.
+2. Use the mapped language when needed.
+3. Personalize with the user's actual projects, clients, products, courses, or areas.
+4. Include useful backlinks to top-level folders.
 
 ---
 
@@ -365,6 +408,8 @@ Use the `obsidian-vault` MCP to create:
 ```text
 00_START_HERE.md
 ```
+
+Use frontmatter compatible with `specs/frontmatter-schema.md`.
 
 Content in `[LANG]` explaining:
 
@@ -380,7 +425,15 @@ Content in `[LANG]` explaining:
 
 ### Step 10 — Verify final vault output contract
 
-Before handoff, verify that the final vault contains:
+Read and apply:
+
+```text
+specs/vault-output-contract.md
+```
+
+Before handoff, verify that the final vault contains all required files, command files, docs, and personalized folders defined there.
+
+At minimum, verify:
 
 ```text
 [VAULT_PATH]/CLAUDE.md
