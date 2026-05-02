@@ -1,312 +1,249 @@
-One-time guided setup that builds a personalized second brain vault in Obsidian.
+# /vault-install
 
-**Before starting:** verify the `obsidian-vault` MCP is connected by calling list_directory on the vault root. If it fails, stop and show:
+You are running the vault installation wizard. Follow these 5 phases exactly, in order.
+
+---
+
+## PHASE 1 — DISCOVERY
+
+Ask the user these questions one at a time (wait for answer before next):
+
+1. "What's the main thing you want to use this second brain for? (work projects, learning, business, research, personal...)"
+2. "Do you already have projects or areas of life you want to organize? Name 2-4 examples."
+3. "What kind of notes do you capture most? (decisions, insights, meeting notes, ideas, references...)"
+
+After answers, say: "Got it. Let me design a structure for you."
+
+---
+
+## PHASE 2 — STRUCTURE DESIGN
+
+Based on their answers, propose a personalized vault structure. Example:
 
 ```
-⚠️ The obsidian-vault MCP is not connected.
+Proposed structure for you:
 
-Complete Step 2 in the README first:
+📁 01_Projects/        → Active projects (CraftSoph, ClientX, etc.)
+📁 02_Areas/           → Ongoing responsibilities (Health, Finance, Learning)
+📁 03_Knowledge/       → What you learn (Insights, Solutions, Concepts)
+📁 04_Daily/           → Daily notes
+📁 05_Monthly/         → Monthly synthesis reports
+```
 
-  claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "/path/to/your/vault"
+Adjust folder names to match their use case. If they're a researcher, maybe `03_Research/`. If they're a developer, maybe `02_Codebases/`.
 
-Then restart Claude Code and try again.
+Say: "Does this structure work for you, or would you like to adjust anything?"
+
+Wait for confirmation or adjustments. Update the proposed structure accordingly.
+
+---
+
+## PHASE 3 — CONFIRM + PERSONALIZE
+
+Ask:
+
+**"One last thing — what language would you like for your vault?"**
+```
+A) English  — all folders and notes in English
+B) Spanish  — todas las carpetas y notas en español
+C) Mixed    — English structure, Spanish note content
+```
+
+Wait for their choice. Store it as [LANG] = "english", "spanish", or "mixed".
+
+Then confirm everything:
+
+```
+Perfect! Here's what I'll build:
+
+📦 VAULT STRUCTURE: [their confirmed structure]
+🌐 LANGUAGE: [their choice]
+
+Skills I'll install:
+✅ /second-brain-capture — capture insights, solutions, decisions
+✅ /link-finder — find orphan notes and suggest connections
+✅ /vault-synthesis — generate monthly knowledge reports
+✅ /next-steps-ai — AI-powered next steps ranked by impact
+✅ /explore-skills — browse and install additional skills
+
+Ready to build? [Yes / Adjust something]
 ```
 
 ---
 
-## PHASE 1 — Discovery
+## PHASE 4 — BUILD
 
-Say:
+Once user confirms, execute all steps silently and fast.
 
-```
-🧠 Let's build YOUR second brain.
+### Language Mapping Table
 
-I'll ask you 4 questions. Your answers shape everything — folder names,
-structure, and how the system works for you specifically.
+Use this table to apply [LANG] to ALL folder names and note content:
 
-1. What's your main role? (choose 1-3)
-   A) Creator (YouTube, Substack, podcast)
-   B) Knowledge Worker (engineer, designer, PM)
-   C) Founder / Entrepreneur
-   D) Student / Researcher
-   E) Manager / Team Lead
-   F) Freelancer / Consultant
+| Element              | english           | spanish              | mixed             |
+|----------------------|-------------------|----------------------|-------------------|
+| Projects folder      | `01_Projects`     | `01_Proyectos`       | `01_Projects`     |
+| Areas folder         | `02_Areas`        | `02_Áreas`           | `02_Areas`        |
+| Knowledge folder     | `03_Knowledge`    | `03_Conocimiento`    | `03_Knowledge`    |
+| Daily folder         | `04_Daily`        | `04_Diario`          | `04_Daily`        |
+| Monthly folder       | `05_Monthly`      | `05_Mensual`         | `05_Monthly`      |
+| Insights subfolder   | `Insights`        | `Ideas`              | `Insights`        |
+| Solutions subfolder  | `Solutions`       | `Soluciones`         | `Soluciones`      |
+| Decisions subfolder  | `Decisions`       | `Decisiones`         | `Decisiones`      |
+| Concepts subfolder   | `Concepts`        | `Conceptos`          | `Concepts`        |
+| Note: Key points     | `## Key Points`   | `## Puntos clave`    | `## Key Points`   |
+| Note: Next steps     | `## Next Steps`   | `## Próximos pasos`  | `## Next Steps`   |
+| Note: Summary        | `## Summary`      | `## Resumen`         | `## Summary`      |
+| Note: Outcome        | `## Outcome`      | `## Resultado`       | `## Resultado`    |
 
-2. What projects are you actively working on?
-   List 1-5. These become your 01_Projects/ folders.
-   Example: my startup, learning Rust, side project
-
-3. What areas of responsibility do you have?
-   List 1-5. These become your 02_Areas/ folders.
-   Example: health, finances, team management, learning
-
-4. What types of knowledge do you most want to capture?
-   □ Insights and realizations
-   □ Technical solutions and fixes
-   □ Decisions (with reasoning)
-   □ Concepts and frameworks
-   □ Meeting notes
-   □ Resources and references
-```
-
-Wait for all answers. Then confirm:
-
-```
-✓ Got it. Here's your profile:
-
-Role:     [detected]
-Projects: [list]
-Areas:    [list]
-Capture:  [selected types]
-
-Does this look right? [yes / adjust]
-```
+Apply the column matching [LANG] to every folder name and note section header you create below.
 
 ---
 
-## PHASE 2 — Structure Design
+### Step 1 — Create folder structure
 
-Propose the vault structure using their actual names:
+Use the **Write tool** (filesystem) to create a `.gitkeep` file in each folder, which forces the folder to exist. Write to `[VAULT_PATH]/[folder]/.gitkeep`.
 
-```
-📐 Here's your vault structure:
+Create all folders from the confirmed structure using the language-mapped names.
 
-01_Projects/
-├── [project-1]/        ← hub note + all related notes
-├── [project-2]/
-└── Claude_Improves/    ← documents your AI skills
+Also always create these knowledge subfolders inside the Knowledge folder:
+- `[knowledge-folder]/Insights` (or mapped name)
+- `[knowledge-folder]/Solutions` (or mapped name)
+- `[knowledge-folder]/Decisions` (or mapped name)
+- `[knowledge-folder]/Concepts` (or mapped name)
 
-02_Areas/
-├── [area-1]/
-└── [area-2]/
+### Step 2 — Create Home note
 
-03_Knowledge/
-├── Insights/           ← realizations, patterns, learnings
-├── Soluciones/         ← fixes, workarounds, technical answers
-├── Decisiones/         ← choices with reasoning and outcomes
-└── Conceptos/          ← frameworks, definitions, mental models
+Use the **obsidian-vault MCP** (`mcp__obsidian-vault__write_note`) to create `Home.md`:
 
-04_Daily/               ← daily notes (one per day)
-05_Monthly/             ← monthly synthesis reports
-
-Every note has frontmatter: type, project, date, status, tags.
-This makes everything searchable and linkable.
-
-Look right? [yes / modify / explain any folder]
-```
-
-Adjust interactively if needed. If user asks "what is this?", explain the purpose of each section in plain terms.
-
+```markdown
+---
+type: hub
+created: [today's date]
 ---
 
-## PHASE 3 — Confirm and personalize
+# 🧠 Second Brain
 
-Ask two quick personalizations:
+> Built with [obsidian-sppf-vault](https://github.com/afmanu/obsidian-sppf-vault)
 
-```
-Two quick choices:
+## Quick Links
+- [[01_Projects/]] (or language-mapped name)
+- [[03_Knowledge/]] (or language-mapped name)
+- [[04_Daily/]] (or language-mapped name)
 
-1. Language for folder/note names?
-   A) English  B) Spanish  C) Keep it as shown
+## Active Projects
+(add your projects here)
 
-2. Want a Claude_Improves project? (recommended)
-   It's a reference guide in your vault that explains every skill,
-   how to use it, and when. You can read it anytime in Obsidian.
-   [yes / skip]
-
-Ready to build? [yes]
+## This Week's Focus
+(update weekly)
 ```
 
----
+Write Home.md content in [LANG] — use the section headers from the language mapping table.
 
-## PHASE 4 — Build the vault
+### Step 3 — Create README note inside vault
 
-Use the `obsidian-vault` MCP to create all notes. Show progress as you go.
+Use the **obsidian-vault MCP** to create `00_START_HERE.md`:
 
-```
-🚀 Building your vault...
-```
+Content should explain (in [LANG]):
+- What this vault is for
+- The 5 folder structure and what goes in each
+- The skills available (`/second-brain-capture`, `/link-finder`, etc.)
+- How to capture a first note: "Try `/second-brain-capture` now"
 
-**Step 1 — Project hubs**
+### Step 4 — Create first project hub
 
-For each project, create `01_Projects/[slug]/[slug].md`:
+If user mentioned specific projects in Phase 1, create a hub note for their first project using the **obsidian-vault MCP**.
 
+Path: `[projects-folder]/[ProjectName]/[ProjectName].md`
+
+Content (in [LANG]):
 ```markdown
 ---
 type: project
-name: [Project Name]
 status: active
-created: [YYYY-MM-DD]
-tags: [project]
+created: [today]
 ---
 
-# [Project Name]
+# [ProjectName]
 
-## Overview
+## [Summary/Resumen]
+[one line description]
 
+## [Key Points/Puntos clave]
+- 
 
-## Goals
-
+## [Next Steps/Próximos pasos]
+- [ ] 
 
 ## Notes
-
 ```
 
-Tick: `✓ [N] project hubs created`
+### Step 5 — Install skills permanently into vault
 
-**Step 2 — Area hubs**
+Use the **Write tool** (filesystem) to copy skills into `[VAULT_PATH]/.claude/commands/`.
 
-For each area, create `02_Areas/[slug]/[slug].md`:
+This is critical: skills must live in the VAULT, not the repo, so they work when the user opens their vault in Claude Code.
 
+Write these files to `[VAULT_PATH]/.claude/commands/`:
+
+**second-brain-capture.md** — copy the full content from `.claude/commands/second-brain-capture.md` in this repo
+
+**link-finder.md** — copy the full content from `.claude/commands/link-finder.md` in this repo
+
+**vault-synthesis.md** — copy the full content from `.claude/commands/vault-synthesis.md` in this repo
+
+**next-steps-ai.md** — copy the full content from `.claude/commands/next-steps-ai.md` in this repo
+
+**explore-skills.md** — copy the full content from `.claude/commands/explore-skills.md` in this repo
+
+To get the content of each file, read it first with the Read tool, then write to the vault path.
+
+### Step 6 — Create skills index in vault
+
+Use the **obsidian-vault MCP** to create `00_SKILLS.md` in the vault root:
+
+Content (in [LANG]):
 ```markdown
----
-type: area
-name: [Area Name]
-created: [YYYY-MM-DD]
-tags: [area]
----
+# Skills Available
 
-# [Area Name]
+These commands work when you open this vault in Claude Code (`claude .`):
 
-## Purpose
+| Command | What it does |
+|---|---|
+| `/second-brain-capture` | Capture insights, solutions, decisions → auto-linked note |
+| `/link-finder` | Find orphan notes and suggest connections |
+| `/vault-synthesis` | Generate monthly knowledge report |
+| `/next-steps-ai` | Get AI-ranked next steps based on your vault state |
+| `/explore-skills` | Browse and install additional skills |
 
-
-## Notes
-
+## Want more skills?
+Type `/explore-skills` to see the full catalog of available skills you can add.
 ```
 
-Tick: `✓ [N] area hubs created`
-
-**Step 3 — Knowledge base**
-
-Create a README note in each knowledge folder explaining what goes there:
-- `03_Knowledge/Insights/README.md` → "Realizations, patterns, and learnings. Created with /second-brain-capture."
-- `03_Knowledge/Soluciones/README.md` → "Fixes, workarounds, and technical answers."
-- `03_Knowledge/Decisiones/README.md` → "Decisions with reasoning. Add an `outcome:` field later to track results."
-- `03_Knowledge/Conceptos/README.md` → "Frameworks, definitions, and mental models."
-
-Tick: `✓ Knowledge base initialized`
-
-**Step 4 — VAULT-INDEX.md**
-
-Create at vault root — a single note linking to all projects and areas:
-
-```markdown
----
-type: index
-created: [YYYY-MM-DD]
----
-
-# Vault Index
-
-## Projects
-- [[01_Projects/[slug]/[slug]|[Project Name]]]
-...
-
-## Areas
-- [[02_Areas/[slug]/[slug]|[Area Name]]]
-
-## Knowledge
-- [[03_Knowledge/Insights/README|Insights]]
-- [[03_Knowledge/Soluciones/README|Soluciones]]
-- [[03_Knowledge/Decisiones/README|Decisiones]]
-- [[03_Knowledge/Conceptos/README|Conceptos]]
-```
-
-Tick: `✓ VAULT-INDEX.md created`
-
-**Step 5 — Claude_Improves project** (if user selected yes)
-
-Create `01_Projects/Claude_Improves/Claude_Improves.md` and one note per installed skill explaining: what it does, how to call it, example input/output.
-
-Tick: `✓ Claude_Improves guide created`
-
-**Step 6 — Install skills into the vault** ⚠️ use the filesystem Write tool, NOT the MCP
-
-The vault is a folder on the user's computer. To install skills, write files directly to `[vault-path]/.claude/commands/` using the Write tool. Do not use the obsidian-vault MCP for this step — it is for Obsidian notes, not hidden config directories.
-
-Get the vault path by asking the user: "What is the full path to your vault folder?" (they set it when connecting the MCP).
-
-Write these files:
-- `[vault-path]/.claude/commands/second-brain-capture.md` — copy from this repo
-- `[vault-path]/.claude/commands/link-finder.md` — copy from this repo
-- `[vault-path]/.claude/commands/vault-synthesis.md` — copy from this repo
-- `[vault-path]/.claude/commands/next-steps-ai.md` — copy from this repo
-- `[vault-path]/.claude/commands/explore-skills.md` — copy from this repo
-
-Also write `[vault-path]/CLAUDE.md`:
-
-```markdown
-# My Second Brain
-
-This vault is powered by Claude Code.
-
-## Available skills
-- /second-brain-capture — capture insight/decision/solution
-- /link-finder          — find orphan notes and suggest links
-- /vault-synthesis      — generate synthesis report
-- /next-steps-ai        — suggest next steps by impact
-- /explore-skills       — browse and build more skills
-
-## Vault structure
-01_Projects/ — active projects
-02_Areas/    — areas of responsibility
-03_Knowledge/ — Insights / Soluciones / Decisiones / Conceptos
-04_Daily/    — daily notes
-05_Monthly/  — monthly synthesis reports
-
-## Frontmatter convention
-type: insight | solution | decision | concept | project | area | meeting | synthesis
-project: [name]
-created: [YYYY-MM-DD]
-status: active | validated | pending | archived
-tags: []
-```
-
-Also copy `docs/skills-catalog.md` from this repo to `[vault-path]/docs/skills-catalog.md` so the user can browse and build more skills from inside their vault.
-
-Tick: `✓ Skills installed`
-Tick: `✓ CLAUDE.md written`
-Tick: `✓ Skills catalog copied`
+Write in [LANG].
 
 ---
 
-## PHASE 5 — First note + handoff
+## PHASE 5 — HANDOFF
+
+After all steps complete, say:
 
 ```
-🎉 Your vault is ready.
+✅ Your second brain is ready!
 
-Important: from now on, open your vault folder in Claude Code
-(not this repo). All skills will be there permanently.
+Here's what was built:
+📁 [list the folders created with their language-mapped names]
+📝 Home.md — your vault hub
+📝 00_START_HERE.md — how to use this vault
+⚡ 5 skills installed: /second-brain-capture, /link-finder, /vault-synthesis, /next-steps-ai, /explore-skills
 
-Vault: [vault-path]
+---
 
-One last thing — let's make your first capture.
-You mentioned you work on [project-1].
+🎯 Try your first capture right now:
+Tell me something you learned recently and I'll capture it for you.
 
-Tell me one insight, decision, or challenge about it right now.
+(Type `/second-brain-capture` or just say "I learned that...")
 ```
 
-Run /second-brain-capture with their input as a live demo.
+Wait for them to try it, or offer to demonstrate.
 
-Then show:
-
-```
-🧠 ALL DONE
-
-✅ [N] projects set up
-✅ [N] areas set up  
-✅ Knowledge base ready
-✅ 5 skills installed in your vault
-✅ Skills catalog installed (run /explore-skills to build more)
-✅ First note captured
-
-From now on → open [vault-path] in Claude Code
-
-DAILY:    /second-brain-capture    /next-steps-ai
-WEEKLY:   /link-finder
-MONTHLY:  /vault-synthesis
-ANYTIME:  /explore-skills  (to add new skills)
-
-Happy capturing! 🧠
-```
+**Important final note:** From now on, open your Obsidian vault folder directly in Claude Code (`claude /path/to/vault`), not this repo. Your skills are installed in the vault — that's your home base.
