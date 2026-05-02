@@ -28,7 +28,7 @@ Do not create or modify files outside the repository or the approved vault path 
 
 ---
 
-## Reference Specs
+## Reference Specs and Recovery Docs
 
 Before installing, repairing, or verifying the vault, read these repository specs:
 
@@ -36,6 +36,7 @@ Before installing, repairing, or verifying the vault, read these repository spec
 specs/vault-output-contract.md
 specs/frontmatter-schema.md
 specs/command-contracts.md
+specs/setup-state-machine.md
 ```
 
 Use them as the source of truth:
@@ -43,6 +44,17 @@ Use them as the source of truth:
 - `specs/vault-output-contract.md` defines what the final vault must contain.
 - `specs/frontmatter-schema.md` defines how generated notes should be structured.
 - `specs/command-contracts.md` defines how each command must behave.
+- `specs/setup-state-machine.md` defines how to resume interrupted setup.
+
+If setup fails, read:
+
+```text
+TROUBLESHOOTING.md
+docs/mcp-setup.md
+docs/recovery-prompts.md
+```
+
+Use them to diagnose, repair, and continue from the last valid state.
 
 If any instruction in a command conflicts with these specs, prefer the specs unless the user explicitly asks for a different behavior.
 
@@ -70,29 +82,7 @@ If the user says "not now", say:
 No problem. Say "start setup" whenever you are ready.
 ```
 
-If the user says "continue setup", resume from the last completed setup state. Do not start over unless necessary.
-
----
-
-## Setup State Machine
-
-Use this state machine to avoid losing progress:
-
-```text
-STATE 0: Repository opened
-STATE 1: User confirmed setup
-STATE 2: Obsidian checked
-STATE 3: Vault path selected and folder created
-STATE 4: Node.js checked
-STATE 5: MCP command configured
-STATE 6: Claude Code restarted or refreshed
-STATE 7: MCP verified
-STATE 8: /vault-install completed
-STATE 9: Final vault verified
-STATE 10: Handoff complete
-```
-
-When resuming setup, inspect the current environment and continue from the latest valid state.
+If the user says "continue setup", read `specs/setup-state-machine.md`, identify the latest valid state, and resume from there. Do not start over unless necessary.
 
 ---
 
@@ -104,9 +94,10 @@ Before running the checks, read:
 specs/vault-output-contract.md
 specs/frontmatter-schema.md
 specs/command-contracts.md
+specs/setup-state-machine.md
 ```
 
-These specs must guide installation, command behavior, generated note structure, repair, and final verification.
+These specs must guide installation, command behavior, generated note structure, repair, resumption, and final verification.
 
 ---
 
@@ -129,6 +120,8 @@ If not found:
 5. Verify again.
 
 Do not continue until Obsidian is installed or the user explicitly chooses to continue without opening Obsidian yet.
+
+If this check fails, read `TROUBLESHOOTING.md`.
 
 ---
 
@@ -172,6 +165,8 @@ Say "done" when you have opened it.
 
 Wait for "done" unless the user explicitly asks to continue without opening Obsidian now.
 
+If vault path detection or creation fails, read `TROUBLESHOOTING.md`.
+
 ---
 
 ### CHECK 3 — Node.js
@@ -200,9 +195,17 @@ npx --version 2>/dev/null || echo "not found"
 
 Do not continue until Node.js and `npx` are available.
 
+If Node.js or `npx` fails, read `TROUBLESHOOTING.md`.
+
 ---
 
 ### CHECK 4 — Connect the MCP
+
+Before MCP setup, read:
+
+```text
+docs/mcp-setup.md
+```
 
 Say:
 
@@ -229,24 +232,33 @@ When you are back, open this same repository and say:
 continue setup
 ```
 
+If MCP setup fails, read:
+
+```text
+TROUBLESHOOTING.md
+docs/mcp-setup.md
+```
+
 ---
 
 ### AFTER RESTART — Continue setup
 
 When the user says "continue setup":
 
-1. Verify the MCP by listing the vault root through the `obsidian-vault` MCP.
-2. If connected, say: `Connected to your vault. Now I will build it.`
-3. Re-read the repository specs:
+1. Read `specs/setup-state-machine.md`.
+2. Identify the latest valid setup state.
+3. Verify the MCP by listing the vault root through the `obsidian-vault` MCP.
+4. If connected, say: `Connected to your vault. Now I will build it.`
+5. Re-read the repository specs:
    - `specs/vault-output-contract.md`
    - `specs/frontmatter-schema.md`
    - `specs/command-contracts.md`
-4. Run `/vault-install` immediately.
-5. If not connected, troubleshoot:
-   - confirm `[VAULT_PATH]`,
-   - check `claude mcp list`,
-   - re-run the MCP add command if needed,
-   - ask the user to restart or refresh Claude Code again.
+   - `specs/setup-state-machine.md`
+6. Run `/vault-install` immediately if the state machine indicates setup is ready for vault installation.
+7. If not connected, troubleshoot using:
+   - `TROUBLESHOOTING.md`,
+   - `docs/mcp-setup.md`,
+   - `docs/recovery-prompts.md` if the user needs a copy-paste recovery prompt.
 
 Do not run `/vault-install` until the MCP is verified.
 
@@ -282,7 +294,12 @@ At minimum, the final vault must contain:
   [personalized folders based on selected profile]
 ```
 
-If any required file is missing, repair the installation before handoff.
+If any required file is missing, repair the installation before handoff using:
+
+```text
+TROUBLESHOOTING.md
+specs/vault-output-contract.md
+```
 
 If repair is not possible, explain exactly what is missing and how the user can fix it.
 
