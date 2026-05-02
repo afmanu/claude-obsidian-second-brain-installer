@@ -17,13 +17,34 @@ Your job is to:
 3. Never assume dependencies are installed.
 4. Verify every environment check before continuing.
 5. Explain before running commands that create, modify, or connect local files.
-6. Create the final Obsidian vault in the user-approved path.
-7. Connect Claude Code to the vault through the `obsidian-vault` MCP.
-8. Run `/vault-install` after MCP verification.
-9. Install all required files, docs, commands, and configuration inside the final vault.
-10. Verify the final vault against the output contract before handoff.
+6. Read the repository specs before installation and verification.
+7. Create the final Obsidian vault in the user-approved path.
+8. Connect Claude Code to the vault through the `obsidian-vault` MCP.
+9. Run `/vault-install` after MCP verification.
+10. Install all required files, docs, commands, and configuration inside the final vault.
+11. Verify the final vault against the output contract before handoff.
 
 Do not create or modify files outside the repository or the approved vault path unless you explain why and get explicit approval.
+
+---
+
+## Reference Specs
+
+Before installing, repairing, or verifying the vault, read these repository specs:
+
+```text
+specs/vault-output-contract.md
+specs/frontmatter-schema.md
+specs/command-contracts.md
+```
+
+Use them as the source of truth:
+
+- `specs/vault-output-contract.md` defines what the final vault must contain.
+- `specs/frontmatter-schema.md` defines how generated notes should be structured.
+- `specs/command-contracts.md` defines how each command must behave.
+
+If any instruction in a command conflicts with these specs, prefer the specs unless the user explicitly asks for a different behavior.
 
 ---
 
@@ -76,6 +97,18 @@ When resuming setup, inspect the current environment and continue from the lates
 ---
 
 ## Setup Wizard
+
+Before running the checks, read:
+
+```text
+specs/vault-output-contract.md
+specs/frontmatter-schema.md
+specs/command-contracts.md
+```
+
+These specs must guide installation, command behavior, generated note structure, repair, and final verification.
+
+---
 
 ### CHECK 1 — Obsidian
 
@@ -204,8 +237,12 @@ When the user says "continue setup":
 
 1. Verify the MCP by listing the vault root through the `obsidian-vault` MCP.
 2. If connected, say: `Connected to your vault. Now I will build it.`
-3. Run `/vault-install` immediately.
-4. If not connected, troubleshoot:
+3. Re-read the repository specs:
+   - `specs/vault-output-contract.md`
+   - `specs/frontmatter-schema.md`
+   - `specs/command-contracts.md`
+4. Run `/vault-install` immediately.
+5. If not connected, troubleshoot:
    - confirm `[VAULT_PATH]`,
    - check `claude mcp list`,
    - re-run the MCP add command if needed,
@@ -217,7 +254,15 @@ Do not run `/vault-install` until the MCP is verified.
 
 ## Final Vault Output Contract
 
-Before handoff, the final vault must contain:
+The source of truth for final vault verification is:
+
+```text
+specs/vault-output-contract.md
+```
+
+Before handoff, verify the final vault against that file.
+
+At minimum, the final vault must contain:
 
 ```text
 [VAULT_PATH]/
@@ -257,6 +302,20 @@ If repair is not possible, explain exactly what is missing and how the user can 
 ---
 
 ## Rules for All Skills
+
+The source of truth for command behavior is:
+
+```text
+specs/command-contracts.md
+```
+
+The source of truth for generated note metadata is:
+
+```text
+specs/frontmatter-schema.md
+```
+
+Rules:
 
 - Use the `obsidian-vault` MCP to read and write Obsidian notes.
 - Use the filesystem Write tool for `.claude/`, `CLAUDE.md`, and other configuration files.
