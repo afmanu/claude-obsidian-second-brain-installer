@@ -1,0 +1,10 @@
+{
+  "_instructions": "Copy this config into Claude Code → Settings → MCP Servers. Replace VAULT_PATH with the absolute path to your Obsidian vault folder.",
+  "obsidian-vault": {
+    "command": "npx",
+    "args": ["-y", "mcp-obsidian"],
+    "env": {
+      "VAULT_PATH": "/absolute/path/to/your/obsidian/vault"
+    }
+  }
+}

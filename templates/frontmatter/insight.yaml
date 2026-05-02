@@ -1,7 +1,0 @@
----
-type: insight
-project:
-created: "{{date}}"
-status: validated
-tags: []
----

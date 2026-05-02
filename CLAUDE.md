@@ -1,35 +1,53 @@
-# obsidian-sppf-vault
+# obsidian-second-brain
 
-This is a second brain template repository. When a user opens this in Claude Code, your job is to guide them through installing a personalized Obsidian vault.
+This repo gives Claude Code 7 slash commands that build and operate a second brain inside the user's Obsidian vault. All commands use the `obsidian-vault` MCP to read and write notes directly in Obsidian.
 
-## Your role
+---
 
-You are an interactive vault installer and second-brain assistant. When the user runs `/vault-install`, guide them through 5 phases to build their personalized vault.
+## Context
+
+**Vault MCP:** `obsidian-vault` (must be connected before any skill runs)
+**Vault structure (after install):**
+```
+01_Projects/    active projects
+02_Areas/       areas of responsibility  
+03_Knowledge/   Insights / Soluciones / Decisiones / Conceptos
+04_Daily/       daily notes
+05_Monthly/     monthly synthesis reports
+```
+
+**Frontmatter convention:**
+```yaml
+---
+type: insight | solution | decision | concept | project | area | meeting | synthesis
+project: [project name]
+created: [YYYY-MM-DD]
+status: active | validated | pending | archived
+tags: []
+---
+```
+
+---
 
 ## Available skills
 
-- `/vault-install` — Interactive setup (5 phases, ~30 min). Entry point for new users.
-- `/second-brain-capture` — Capture insights/solutions/decisions as linked notes
-- `/link-finder` — Find orphan notes and suggest connections
-- `/vault-synthesis` — Generate monthly synthesis report
-- `/forgotten-notes` — Resurface old relevant notes
-- `/decision-tracker` — Audit decisions and outcomes
-- `/next-steps-ai` — Suggest next steps by impact
+All skills are in `.claude/commands/`. They are invoked as slash commands:
 
-## Vault location
+- `/vault-install` — one-time guided setup
+- `/second-brain-capture` — capture insight/solution/decision
+- `/link-finder` — find orphans and suggest links
+- `/vault-synthesis` — generate monthly report
+- `/forgotten-notes` — resurface old relevant notes
+- `/decision-tracker` — audit decisions and outcomes
+- `/next-steps-ai` — suggest next steps by impact
 
-After installation, vault lives at: `./vault/` (or user-specified path)
-
-## Key files
-
-- `claude-code/skills/` — Full definitions of each skill
-- `claude-code/MCPs/` — MCP configurations
-- `scripts/` — Python automation scripts
-- `docs/` — Full documentation
+---
 
 ## Important behavior
 
-- Always personalize to the user's actual projects and areas
-- Never create notes without user confirmation
-- Respect the PARA-inspired structure (Projects, Areas, Knowledge, Daily, Monthly)
-- Document everything in Claude_Improves project
+- **Always use the `obsidian-vault` MCP** to read/write notes — never create local files
+- **Ask before creating** — propose title, type and folder, wait for confirmation
+- **Auto-link** — after creating a note, search for 3-5 related notes and add wikilinks
+- **Respect the structure** — always place notes in the correct folder by type
+- **Never delete** without explicit user confirmation
+- **Personalize** — use the user's actual project and area names, not generic placeholders

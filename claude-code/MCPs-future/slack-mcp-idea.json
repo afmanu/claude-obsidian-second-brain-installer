@@ -1,7 +1,0 @@
-{
-  "name": "slack-mcp",
-  "status": "idea",
-  "description": "Monitor Slack for knowledge worth capturing",
-  "how_it_would_work": "Watch for 💡 emoji reactions or 'insight' keyword → auto-create note in vault",
-  "priority": "medium"
-}

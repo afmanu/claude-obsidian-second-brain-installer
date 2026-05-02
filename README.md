@@ -1,31 +1,18 @@
-# 🧠 obsidian-sppf-vault
+# 🧠 obsidian-second-brain
 
-> A second brain template for Obsidian — powered by Claude Code.
+> A second brain template for Obsidian — powered by Claude Code AI skills.
 
-## What is this?
-
-A ready-to-use vault template that installs a personal knowledge management system with **6 AI skills** and **2 MCPs** — all configured interactively in ~30 minutes.
-
-## Quick Start
-
-1. Clone this repo
-2. Open the folder in **Claude Code**
-3. Run:
-
-```
-/vault-install
-```
-
-That's it. Claude will guide you through the rest.
+Clone this repo, follow 3 setup steps, then run `/vault-install` and Claude builds your personalized vault automatically.
 
 ---
 
 ## What you get
 
-### 6 Skills (AI-powered commands)
+**6 AI skills** that run inside Claude Code and write directly into your Obsidian vault:
 
 | Skill | What it does |
 |---|---|
+| `/vault-install` | One-time guided setup — builds your vault in ~20 min |
 | `/second-brain-capture` | Capture insights/decisions → linked note in <2s |
 | `/link-finder` | Find orphan notes + suggest connections with % score |
 | `/vault-synthesis` | Monthly report: patterns, insights, recommendations |
@@ -33,20 +20,71 @@ That's it. Claude will guide you through the rest.
 | `/decision-tracker` | Audit past decisions + success rate by category |
 | `/next-steps-ai` | Suggest 3-5 next steps ordered by impact |
 
-### 2 MCPs (background automation)
+---
 
-- **obsidian-sync-mcp** — real-time bidirectional sync Obsidian ↔ Claude Code
-- **github-mcp** — automatic backup to GitHub every 60 min
+## Before you start — 3 setup steps
 
-### Vault structure (personalized to you)
+### Step 1 — Install Obsidian
+
+Download and install [Obsidian](https://obsidian.md) (free).
+
+Open Obsidian → **Create new vault** → choose a folder on your computer → name it whatever you want (e.g. `my-vault`).
+
+Leave it open. You'll point the MCP to this folder in Step 2.
+
+---
+
+### Step 2 — Connect the Obsidian MCP
+
+The MCP is what allows Claude Code to read and write notes in your vault.
+
+**Install the MCP package:**
+```bash
+npm install -g mcp-obsidian
+```
+
+**Add it to your Claude Code MCP settings.**
+
+Open Claude Code → Settings → MCP Servers → add:
+
+```json
+{
+  "obsidian-vault": {
+    "command": "npx",
+    "args": ["-y", "mcp-obsidian"],
+    "env": {
+      "VAULT_PATH": "/absolute/path/to/your/vault"
+    }
+  }
+}
+```
+
+Replace `/absolute/path/to/your/vault` with the actual path to the vault folder you created in Step 1.
+
+Restart Claude Code. You should see `obsidian-vault` in your MCP list.
+
+---
+
+### Step 3 — Clone this repo and open in Claude Code
+
+```bash
+git clone https://github.com/afmanu/obsidian-sppf-vault.git
+cd obsidian-sppf-vault
+```
+
+Open the folder in Claude Code. The 7 skills will be available immediately as slash commands.
+
+---
+
+## Run the installer
+
+Type in Claude Code:
 
 ```
-01_Projects/   your active projects
-02_Areas/      areas of responsibility
-03_Knowledge/  insights, solutions, decisions, concepts
-04_Daily/      daily notes (auto-generated)
-05_Monthly/    monthly synthesis reports
+/vault-install
 ```
+
+Claude will ask you about your projects and areas, then build your personalized vault structure directly in Obsidian. Takes ~20 minutes, mostly automated.
 
 ---
 
@@ -54,22 +92,40 @@ That's it. Claude will guide you through the rest.
 
 - [Obsidian](https://obsidian.md) (free)
 - [Claude Code](https://claude.ai/code)
-- Python 3.8+
+- Node.js (for the MCP)
 
 ---
 
-## Installation time
+## How it works
 
-~30 minutes, mostly automated. Interactive setup asks about your projects and areas — the vault is built around your actual life, not a generic template.
+```
+You → /vault-install in Claude Code
+         ↓
+Claude asks: your projects, areas, capture style
+         ↓
+Claude writes structure into your Obsidian vault via MCP
+         ↓
+Your vault is ready with folders, hubs, and all 6 skills active
+```
+
+No Python. No scripts. No manual file creation. Claude does it all through the Obsidian MCP.
 
 ---
 
-## Built with
+## After installation
 
-- [SPPF](https://github.com/afmanu/sppf) — knowledge structuring framework
-- [Claude Code](https://claude.ai/code) — AI layer
-- [Obsidian](https://obsidian.md) — local-first knowledge base
+The vault structure Claude creates:
 
----
+```
+01_Projects/    your active projects (personalized)
+02_Areas/       areas of responsibility (personalized)
+03_Knowledge/
+  Insights/
+  Soluciones/
+  Decisiones/
+  Conceptos/
+04_Daily/       daily notes
+05_Monthly/     monthly synthesis reports
+```
 
-*Private repository — not yet public*
+Plus a `Claude_Improves/` project inside `01_Projects/` that documents every skill and how it works — your personal reference guide.

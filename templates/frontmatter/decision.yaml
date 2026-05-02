@@ -1,8 +1,0 @@
----
-type: decision
-project:
-created: "{{date}}"
-status: active
-outcome: pending
-tags: []
----
