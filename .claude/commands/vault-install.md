@@ -40,6 +40,9 @@ Before starting, confirm that:
    - `specs/vault-output-contract.md`
    - `specs/frontmatter-schema.md`
    - `specs/command-contracts.md`
+6. The repository docs can be read:
+   - `docs/skills-catalog.md`
+   - `docs/system-contracts.md`
 
 If any precondition fails, stop and repair setup before continuing.
 
@@ -176,6 +179,7 @@ I will also install:
 - CLAUDE.md inside the final vault
 - .claude/vault-profile.md
 - docs/skills-catalog.md
+- docs/system-contracts.md
 
 I will verify the final vault against:
 - specs/vault-output-contract.md
@@ -265,10 +269,9 @@ created: [today's date]
 ## Link Rules
 [copy the full "Link Rules" table from profiles/[PROFILE].md]
 
-## Reference Specs
-- specs/vault-output-contract.md
-- specs/frontmatter-schema.md
-- specs/command-contracts.md
+## Reference Docs
+- docs/system-contracts.md
+- docs/skills-catalog.md
 ```
 
 This file is the source of truth for all skills inside the final vault.
@@ -296,14 +299,18 @@ Before making profile-aware decisions, always read:
 
 `.claude/vault-profile.md`
 
+Also use this compact system reference when needed:
+
+`docs/system-contracts.md`
+
 ## Operating Rules
 
 - Use the `obsidian-vault` MCP to read and write Obsidian notes.
 - Use the filesystem Write tool for `.claude/`, command files, docs, and configuration files.
 - Respect the user's selected language.
 - Propose before creating notes: show title, type, folder, and likely links.
-- Use the note metadata patterns defined during installation.
-- Follow the installed command contracts.
+- Use the note metadata patterns defined in `docs/system-contracts.md`.
+- Follow the installed command contracts summarized in `docs/system-contracts.md`.
 - Never delete notes or configuration without explicit confirmation.
 - Never ask the user to store passwords, seed phrases, private keys, API keys, or sensitive credentials in the vault.
 
@@ -336,21 +343,25 @@ The installed commands must follow `specs/command-contracts.md`.
 
 ---
 
-### Step 6 — Copy the skills catalog into the final vault
+### Step 6 — Copy vault docs into the final vault
 
 Read from this installer repository:
 
 ```text
 docs/skills-catalog.md
+docs/system-contracts.md
 ```
 
 Write the full content to:
 
 ```text
 [VAULT_PATH]/docs/skills-catalog.md
+[VAULT_PATH]/docs/system-contracts.md
 ```
 
-This is required because `/explore-skills` depends on this file after handoff.
+`docs/skills-catalog.md` is required because `/explore-skills` depends on this file after handoff.
+
+`docs/system-contracts.md` is required so Claude can understand the vault's operating rules after handoff without reopening the installer repository.
 
 ---
 
@@ -419,7 +430,8 @@ Content in `[LANG]` explaining:
 - how `/second-brain-capture` routes notes,
 - what the 5 core vault skills do,
 - how to open the vault in Claude Code,
-- how to capture the first note.
+- how to capture the first note,
+- where to find `docs/system-contracts.md`.
 
 ---
 
@@ -440,6 +452,7 @@ At minimum, verify:
 [VAULT_PATH]/Home.md
 [VAULT_PATH]/00_START_HERE.md
 [VAULT_PATH]/docs/skills-catalog.md
+[VAULT_PATH]/docs/system-contracts.md
 [VAULT_PATH]/.claude/vault-profile.md
 [VAULT_PATH]/.claude/commands/second-brain-capture.md
 [VAULT_PATH]/.claude/commands/link-finder.md
@@ -474,6 +487,7 @@ What was built:
 - .claude/vault-profile.md
 - Core vault skills
 - Skills catalog
+- System contracts reference
 - Hub notes for your selected profile
 
 From now on, open your vault directly in Claude Code:
