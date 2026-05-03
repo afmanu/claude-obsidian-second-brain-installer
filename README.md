@@ -2,15 +2,43 @@
 
 > A Claude Code guided installer for building a personalized Obsidian second brain.
 
-Claude Obsidian Second Brain is not just an Obsidian template. It is a guided installation system for Claude Code.
+Claude Obsidian Second Brain is not just an Obsidian template. It is a guided installation system for Claude Code and Claude Co-Work.
 
-You give Claude Code this repository, Claude reads the instructions, checks your local environment, creates your Obsidian vault, connects it through MCP, asks you a few diagnostic questions, builds a personalized structure, and installs reusable AI skills inside the vault.
+You give Claude this repository, Claude reads the instructions, checks your local environment, creates your Obsidian vault, connects it through MCP, asks you a few diagnostic questions, builds a personalized structure, and installs reusable AI skills inside the vault.
+
+---
+
+## Quick start
+
+You do not need a perfect prompt.
+
+Open Claude Code or Claude Co-Work and say something simple like:
+
+```text
+Install this repository:
+https://github.com/afmanu/obsidian-sppf-vault
+```
+
+or:
+
+```text
+I want to install this Obsidian second brain system:
+https://github.com/afmanu/obsidian-sppf-vault
+```
+
+Claude should treat that as installation intent, read the repository instructions, and start the guided setup.
+
+If Claude only summarizes the repository instead of installing it, say:
+
+```text
+Do not summarize it. Read BOOTSTRAP.md, README.md, INSTALL.md, and CLAUDE.md, then start the installation wizard.
+```
 
 ---
 
 ## What this is
 
-This repository is a Claude Code guided installer.
+This repository is a Claude-guided installer.
 
 It helps you create a personalized Obsidian second brain by:
 
@@ -32,7 +60,7 @@ This is not:
 - a replacement for Obsidian Sync,
 - a fully autonomous background agent.
 
-Claude Code guides and executes the setup with your approval.
+Claude guides and executes the setup with your approval.
 
 ---
 
@@ -57,13 +85,20 @@ It is especially useful for:
 - knowledge workers,
 - people building a personal operating system.
 
-This may not be ideal if you do not use Claude Code, do not want to use Obsidian, prefer a mobile-first setup, or want to design every part of your vault manually.
+This may not be ideal if you do not use Claude Code or Claude Co-Work, do not want to use Obsidian, prefer a mobile-first setup, or want to design every part of your vault manually.
 
 ---
 
-## Install with Claude Code
+## Install with Claude
 
-Open Claude Code and paste this:
+The short version is enough:
+
+```text
+Install this repository:
+https://github.com/afmanu/obsidian-sppf-vault
+```
+
+For a stricter installation request, paste this:
 
 ```text
 I want to install this Obsidian second brain system:
@@ -73,7 +108,7 @@ https://github.com/afmanu/obsidian-sppf-vault
 Please do the following:
 
 1. Clone or access the repository.
-2. Read its README.md and CLAUDE.md files.
+2. Read BOOTSTRAP.md, README.md, INSTALL.md, and CLAUDE.md.
 3. Follow the repository instructions exactly.
 4. Guide me step by step through the full setup.
 5. Ask me one question at a time.
@@ -92,7 +127,7 @@ https://github.com/afmanu/obsidian-sppf-vault
 Haz lo siguiente:
 
 1. Accede o clona el repositorio.
-2. Lee sus archivos README.md y CLAUDE.md.
+2. Lee BOOTSTRAP.md, README.md, INSTALL.md y CLAUDE.md.
 3. Sigue exactamente las instrucciones del repositorio.
 4. Guíame paso por paso durante toda la instalación.
 5. Hazme una sola pregunta cada vez.
@@ -110,7 +145,7 @@ Claude will guide you through the setup, automate the parts it can, ask for appr
 The setup flow is:
 
 1. Clone or access this repository.
-2. Read `README.md` and `CLAUDE.md`.
+2. Read `BOOTSTRAP.md`, `README.md`, `INSTALL.md`, and `CLAUDE.md`.
 3. Check whether Obsidian is installed.
 4. Create your vault folder.
 5. Check whether Node.js is installed.
@@ -171,7 +206,7 @@ The final vault is where your notes, commands, profile configuration, and workfl
 
 ## Manual installation fallback
 
-If Claude Code cannot clone or access the repository automatically, run this manually:
+If Claude cannot clone or access the repository automatically, run this manually:
 
 ```bash
 git clone https://github.com/afmanu/obsidian-sppf-vault.git
@@ -179,7 +214,7 @@ cd obsidian-sppf-vault
 claude .
 ```
 
-Claude should then read `CLAUDE.md` and start the setup wizard.
+Claude should then read `BOOTSTRAP.md`, `CLAUDE.md`, and start the setup wizard.
 
 ---
 
@@ -187,9 +222,9 @@ Claude should then read `CLAUDE.md` and start the setup wizard.
 
 Required:
 
-- Claude Code installed and working.
+- Claude Code or Claude Co-Work.
 - Internet connection.
-- Git installed, or the ability for Claude Code to access GitHub.
+- Git installed, or the ability for Claude to access GitHub.
 - Terminal access.
 - Permission to create local folders.
 
