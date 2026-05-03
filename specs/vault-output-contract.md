@@ -25,6 +25,7 @@ At the end of setup, the final vault must contain:
   00_START_HERE.md
   docs/
     skills-catalog.md
+    system-contracts.md
   .claude/
     vault-profile.md
     commands/
@@ -170,6 +171,26 @@ Validation:
 
 ---
 
+### `docs/system-contracts.md`
+
+Required.
+
+Purpose:
+
+- compact reference for how the final vault should behave after handoff,
+- summarizes final vault contract, command behavior, frontmatter rules, language behavior, recovery behavior, and safety rules,
+- allows Claude to operate inside the final vault without needing to reopen the installer repository.
+
+Validation:
+
+- file exists at `[VAULT_PATH]/docs/system-contracts.md`,
+- includes final vault contract summary,
+- includes command behavior rules,
+- includes frontmatter minimum fields,
+- includes safety rules.
+
+---
+
 ## Required personalized folders
 
 The installer must create all folders from the selected profile's final structure.
@@ -192,9 +213,10 @@ Before handoff, Claude must verify:
 2. `.claude/vault-profile.md` exists and is complete.
 3. All five core command files exist.
 4. `docs/skills-catalog.md` exists.
-5. All selected profile folders exist.
-6. `Home.md` and `00_START_HERE.md` were created through the vault note system.
-7. The final vault can be opened directly with `claude "[VAULT_PATH]"`.
+5. `docs/system-contracts.md` exists.
+6. All selected profile folders exist.
+7. `Home.md` and `00_START_HERE.md` were created through the vault note system.
+8. The final vault can be opened directly with `claude "[VAULT_PATH]"`.
 
 ---
 
