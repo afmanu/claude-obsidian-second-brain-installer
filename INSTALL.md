@@ -55,20 +55,41 @@ Claude should:
 1. Clone or access the repository.
 2. Read `README.md`.
 3. Read `CLAUDE.md`.
-4. Start the setup wizard.
-5. Check whether Obsidian is installed.
-6. Create or confirm your vault folder.
-7. Check whether Node.js is installed.
-8. Configure the Obsidian MCP connection.
-9. Ask you to restart Claude Code if needed.
-10. Continue setup after restart.
-11. Run `/vault-install`.
-12. Ask diagnostic questions about your work, projects, and capture needs.
-13. Recommend a personalized vault profile.
-14. Ask which language you want for your vault.
-15. Build your personalized vault structure.
-16. Install the core vault skills.
-17. Hand you off to the final vault folder.
+4. Read the repository specs and recovery docs.
+5. Start the setup wizard.
+6. Check whether Obsidian is installed.
+7. Create or confirm your vault folder.
+8. Check whether Node.js and `npx` are installed.
+9. Configure the Obsidian MCP connection.
+10. Ask you to restart Claude Code if needed.
+11. Continue setup after restart.
+12. Run `/vault-install`.
+13. Ask diagnostic questions about your work, projects, and capture needs.
+14. Recommend a personalized vault profile.
+15. Ask which language you want for your vault.
+16. Build your personalized vault structure.
+17. Install the core vault skills.
+18. Verify the final vault.
+19. Hand you off to the final vault folder.
+
+---
+
+## Important repository files
+
+Claude should use these files during installation:
+
+```text
+README.md
+CLAUDE.md
+INSTALL.md
+TROUBLESHOOTING.md
+docs/mcp-setup.md
+docs/recovery-prompts.md
+specs/vault-output-contract.md
+specs/frontmatter-schema.md
+specs/command-contracts.md
+specs/setup-state-machine.md
+```
 
 ---
 
@@ -93,7 +114,7 @@ Recommended:
 - Basic comfort approving terminal commands.
 - A clean folder where your vault can be created.
 
-Windows and WSL users may need additional path configuration if Obsidian runs on Windows but Claude Code runs inside WSL.
+Windows and WSL users may need additional path configuration if Obsidian runs on Windows but Claude Code runs inside WSL. See `docs/mcp-setup.md` for MCP and path guidance.
 
 ---
 
@@ -134,6 +155,12 @@ docs/
 
 The exact folder structure depends on your selected profile and language.
 
+The full final vault contract is defined in:
+
+```text
+specs/vault-output-contract.md
+```
+
 ---
 
 ## After installation
@@ -158,6 +185,15 @@ If setup fails, ask Claude to:
 Review the installation state, identify the failed step, and continue from the last successful setup stage without starting over unless necessary.
 ```
 
+Claude should read:
+
+```text
+TROUBLESHOOTING.md
+specs/setup-state-machine.md
+docs/mcp-setup.md
+docs/recovery-prompts.md
+```
+
 Common failure points are:
 
 - Git cannot clone the repository.
@@ -167,4 +203,8 @@ Common failure points are:
 - Windows/WSL paths do not match the Obsidian vault location.
 - The final vault is missing expected files.
 
-A dedicated `TROUBLESHOOTING.md` file should be added in a future version.
+If you need a copy-paste recovery prompt, see:
+
+```text
+docs/recovery-prompts.md
+```
