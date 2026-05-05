@@ -119,13 +119,13 @@ Claude should still help by:
 4. Waiting for the user to confirm completion.
 5. Continuing from the next setup state.
 
-For MCP setup, provide:
+For MCP setup, provide this command:
 
 ```bash
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
 ```
 
-On Windows native, if the standard command fails, provide:
+On Windows native, if the standard command fails, provide this command:
 
 ```bash
 claude mcp add obsidian-vault -- cmd /c npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
@@ -142,15 +142,17 @@ Say:
 ```text
 I can guide this setup from Co-Work, but I do not currently have enough local access to install the vault directly from this session.
 
-Please open Claude Code in your terminal and run:
+Please open Claude Code in your terminal and run the commands below.
+
+When Claude opens the repository, it will read BOOTSTRAP.md and CLAUDE.md and start the setup wizard.
+```
+
+Then provide:
 
 ```bash
 git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
 cd claude-obsidian-second-brain-installer
 claude .
-```
-
-When Claude opens the repository, it will read BOOTSTRAP.md and CLAUDE.md and start the setup wizard.
 ```
 
 Do not present this as a failure. Present it as the correct execution mode for the user's environment.
