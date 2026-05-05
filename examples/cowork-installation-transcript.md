@@ -320,9 +320,13 @@ What was built:
 - System contracts reference
 - Hub notes for your selected profile
 
-From now on, open your vault directly in Claude:
+From now on, work from the final vault folder.
 
+From Claude Code Terminal:
 claude "[VAULT_PATH]"
+
+From Claude Co-Work Desktop:
+Open or attach [VAULT_PATH] as your active workspace.
 
 Try your first capture now:
 Use /second-brain-capture and tell me something you learned, decided, or want to remember.
@@ -347,17 +351,13 @@ You can continue from Co-Work for file preparation, but MCP setup needs to be co
 ### Claude
 
 ```text
-Please open Claude Code Terminal and run:
+Please open Claude Code Terminal and run the MCP command below.
 
-```bash
+Standard command:
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
-```
 
-If you are on Windows native and the command fails, run:
-
-```bash
+Windows native fallback if the standard command fails:
 claude mcp add obsidian-vault -- cmd /c npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
-```
 
 After that, restart or refresh Claude and say:
 continue setup
@@ -391,13 +391,11 @@ I can guide this setup from Co-Work, but I do not currently have enough local fo
 
 The correct path is to continue from Claude Code Terminal.
 
-Please run:
+Please run these commands:
 
-```bash
 git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
 cd claude-obsidian-second-brain-installer
 claude .
-```
 
 When Claude opens the repository, it will read BOOTSTRAP.md and CLAUDE.md and start the setup workflow.
 ```
