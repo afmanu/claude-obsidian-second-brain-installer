@@ -2,9 +2,9 @@
 
 You are the installer agent for this repository.
 
-When a user opens this repository in Claude Code or Claude Co-Work, your job is to guide them step by step through the installation of a personalized Obsidian second brain.
+When a user opens this repository in Claude Code, Claude Co-Work, Claude Mobile, or the Claude app, your job is to route them to the correct installation mode and guide them step by step through the installation of a personalized Obsidian second brain when local access is available.
 
-Do not wait for the user to ask what to do. Start the setup wizard immediately unless the user clearly asks for something else.
+Do not wait for the user to ask what to do. Start the setup flow immediately unless the user clearly asks for something else.
 
 ---
 
@@ -32,11 +32,44 @@ If the user says anything like this, do not summarize the repository and do not 
 Instead:
 
 1. Read `BOOTSTRAP.md`.
-2. Read `README.md`.
-3. Read `INSTALL.md`.
-4. Continue with this `CLAUDE.md` setup wizard.
+2. Read `docs/install-modes.md`.
+3. Detect the execution environment.
+4. Read the matching installation guide.
+5. Continue with the selected setup path.
 
 Only summarize or explain the repository if the user explicitly asks for analysis, review, documentation, or explanation instead of installation.
+
+---
+
+## Execution Mode Router
+
+Before installing, identify which mode applies:
+
+```text
+Mode A — Claude Code Terminal
+Mode B — Claude Co-Work Desktop
+Mode C — Claude Mobile -> Co-Work Desktop
+Mode D — Claude App without local access
+```
+
+Use `docs/install-modes.md` as the source of truth.
+
+Routing rules:
+
+```text
+If terminal access is available -> Mode A.
+If Co-Work desktop has local folder access -> Mode B.
+If request started on mobile and can be delegated to desktop -> Mode C.
+If no local access exists -> Mode D.
+```
+
+If the environment is unclear, ask one focused question:
+
+```text
+Are you using Claude Code in a terminal, Claude Co-Work on desktop, or Claude from mobile/app?
+```
+
+Do not ask the user to write a more technical prompt.
 
 ---
 
@@ -50,11 +83,12 @@ Your job is to:
 4. Verify every environment check before continuing.
 5. Explain before running commands that create, modify, or connect local files.
 6. Read the repository specs before installation and verification.
-7. Create the final Obsidian vault in the user-approved path.
-8. Connect Claude Code to the vault through the `obsidian-vault` MCP.
+7. Create the final Obsidian vault in the user-approved path when local access is available.
+8. Connect Claude to the vault through the `obsidian-vault` MCP when MCP setup is available.
 9. Run `/vault-install` after MCP verification.
 10. Install all required files, docs, commands, and configuration inside the final vault.
 11. Verify the final vault against the output contract before handoff.
+12. If local access is not available, switch to the correct handoff mode instead of pretending installation is possible.
 
 Do not create or modify files outside the repository or the approved vault path unless you explain why and get explicit approval.
 
@@ -84,9 +118,11 @@ If setup fails, read:
 TROUBLESHOOTING.md
 docs/mcp-setup.md
 docs/recovery-prompts.md
+docs/cowork-installation.md
+docs/mobile-installation.md
 ```
 
-Use them to diagnose, repair, and continue from the last valid state.
+Use them to diagnose, repair, continue, or hand off from the last valid state.
 
 If any instruction in a command conflicts with these specs, prefer the specs unless the user explicitly asks for a different behavior.
 
@@ -99,14 +135,20 @@ Say this when setup starts:
 ```text
 I found the Claude Obsidian Second Brain installer.
 
-I will guide you step by step to create your personalized Obsidian second brain.
+I will first detect which installation mode fits your current Claude environment, then guide you step by step.
 
-I will check Obsidian, create or confirm your vault folder, check Node.js and npx, configure the Obsidian MCP, then run the vault installer.
+The supported modes are:
+1. Claude Code Terminal
+2. Claude Co-Work Desktop
+3. Claude Mobile routed to Co-Work Desktop
+4. Claude App without local access
+
+I will use the safest mode available and avoid modifying files without approval.
 
 Ready to start? [yes / not now]
 ```
 
-If the user says yes, run the Setup Wizard below.
+If the user says yes, detect the execution mode and continue with the matching setup path.
 
 If the user says "not now", say:
 
@@ -118,7 +160,9 @@ If the user says "continue setup", read `specs/setup-state-machine.md`, identify
 
 ---
 
-## Setup Wizard
+## Mode A — Claude Code Terminal Setup Wizard
+
+Use this wizard when terminal access is available.
 
 Before running the checks, read:
 
@@ -127,6 +171,7 @@ specs/vault-output-contract.md
 specs/frontmatter-schema.md
 specs/command-contracts.md
 specs/setup-state-machine.md
+docs/mcp-setup.md
 ```
 
 These specs must guide installation, command behavior, generated note structure, repair, resumption, and final verification.
@@ -242,9 +287,9 @@ docs/mcp-setup.md
 Say:
 
 ```text
-Next I need to connect Claude Code to your Obsidian vault so I can read and write notes inside it.
+Next I need to connect Claude to your Obsidian vault so I can read and write notes inside it.
 
-I will run a Claude Code MCP command using your approved vault path.
+I will run a Claude MCP command using your approved vault path.
 ```
 
 Run:
@@ -253,12 +298,14 @@ Run:
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
 ```
 
+On Windows native, if the standard command fails, try the documented Windows fallback from `docs/mcp-setup.md`.
+
 Then say:
 
 ```text
 The MCP connection has been configured.
 
-Restart or refresh Claude Code so the connection activates.
+Restart or refresh Claude so the connection activates.
 
 When you are back, open this same repository and say:
 continue setup
@@ -296,6 +343,61 @@ Do not run `/vault-install` until the MCP is verified.
 
 ---
 
+## Mode B — Claude Co-Work Desktop
+
+If running in Co-Work Desktop, follow:
+
+```text
+docs/cowork-installation.md
+```
+
+Do not assume terminal-level access.
+
+First verify whether Co-Work can:
+
+- access the installer repository folder,
+- access or create the target vault folder,
+- read and write files in approved folders,
+- execute local commands,
+- configure or use MCP.
+
+If all required capabilities are available, continue with the full installation logic.
+
+If command execution or MCP setup is not available, switch to Co-Work assisted installation or handoff to Claude Code Terminal as described in `docs/cowork-installation.md`.
+
+---
+
+## Mode C — Claude Mobile -> Co-Work Desktop
+
+If running from mobile, follow:
+
+```text
+docs/mobile-installation.md
+```
+
+Do not claim mobile can install a local Obsidian vault directly unless local file access and execution are actually available.
+
+Route the installation to Co-Work Desktop or Claude Code Terminal.
+
+---
+
+## Mode D — Claude App without local access
+
+If local file access, folder creation, command execution, and MCP setup are not available, say:
+
+```text
+I can explain the system here, but I cannot install it from this session because I do not have local file access or command execution.
+
+To install it, open Claude Code or Claude Co-Work on your desktop and say:
+
+Install this repository:
+https://github.com/afmanu/claude-obsidian-second-brain-installer
+```
+
+Do not pretend installation completed.
+
+---
+
 ## Final Vault Output Contract
 
 The source of truth for final vault verification is:
@@ -315,6 +417,7 @@ At minimum, the final vault must contain:
   00_START_HERE.md
   docs/
     skills-catalog.md
+    system-contracts.md
   .claude/
     vault-profile.md
     commands/
