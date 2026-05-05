@@ -215,10 +215,18 @@ This repository is only the installer.
 
 After setup, Claude will create your actual Obsidian vault in the location you choose.
 
-From that point on, you should open the vault folder in Claude Code or Claude Co-Work, not this repository:
+From that point on, work from the final vault folder, not this installer repository.
+
+From Claude Code Terminal:
 
 ```bash
 claude /path/to/your/vault
+```
+
+From Claude Co-Work Desktop:
+
+```text
+Open or attach the final vault folder as your active workspace.
 ```
 
 The final vault is where your notes, commands, profile configuration, and workflows will live.
