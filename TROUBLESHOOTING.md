@@ -2,7 +2,7 @@
 
 This document defines recovery paths for Claude Obsidian Second Brain installation failures.
 
-Claude must read this file whenever setup fails, verification fails, or the user returns after an interrupted installation.
+Claude must read this file whenever setup fails, verification fails, the user returns after an interrupted installation, or the current execution environment cannot complete the install directly.
 
 ---
 
@@ -12,19 +12,21 @@ Do not restart the full setup unless necessary.
 
 When something fails:
 
-1. Identify the current setup state.
-2. Identify the failed component.
-3. Fix the earliest failing dependency.
-4. Continue from the last valid state.
-5. Verify before moving forward.
+1. Identify the current execution mode.
+2. Identify the current setup state.
+3. Identify the failed component.
+4. Fix the earliest failing dependency.
+5. Continue from the last valid state.
+6. Verify before moving forward.
 
 Use:
 
 ```text
+docs/install-modes.md
 specs/setup-state-machine.md
 ```
 
-if the installation state is unclear.
+if the execution mode or installation state is unclear.
 
 Use:
 
@@ -33,6 +35,15 @@ docs/mcp-setup.md
 ```
 
 for MCP-specific diagnosis and repair.
+
+Use:
+
+```text
+docs/cowork-installation.md
+docs/mobile-installation.md
+```
+
+for Co-Work or mobile-specific recovery.
 
 ---
 
@@ -56,7 +67,7 @@ git --version
 Confirm the repository URL:
 
 ```text
-https://github.com/afmanu/obsidian-sppf-vault
+https://github.com/afmanu/claude-obsidian-second-brain-installer
 ```
 
 ### Fix
@@ -64,14 +75,14 @@ https://github.com/afmanu/obsidian-sppf-vault
 If Git is installed, run:
 
 ```bash
-git clone https://github.com/afmanu/obsidian-sppf-vault.git
-cd obsidian-sppf-vault
+git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
+cd claude-obsidian-second-brain-installer
 claude .
 ```
 
 If Git is missing, ask the user to install Git or download the repository as a ZIP from GitHub.
 
-Do not continue until `README.md` and `CLAUDE.md` can be read.
+Do not continue until `BOOTSTRAP.md`, `README.md`, `INSTALL.md`, and `CLAUDE.md` can be read.
 
 ---
 
@@ -244,11 +255,19 @@ Then re-run:
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
 ```
 
-Restart or refresh Claude Code before verification.
+On Windows native, if needed:
+
+```bash
+claude mcp add obsidian-vault -- cmd /c npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
+```
+
+Restart or refresh Claude before verification.
+
+If MCP setup is not available in the current environment, switch to the correct handoff mode using `docs/install-modes.md`.
 
 ---
 
-## 7. Claude Code was restarted and setup context was lost
+## 7. Claude was restarted and setup context was lost
 
 ### Symptoms
 
@@ -262,11 +281,13 @@ Read:
 
 ```text
 specs/setup-state-machine.md
+docs/install-modes.md
 ```
 
 Then inspect:
 
 ```text
+- Which execution mode is active?
 - Does [VAULT_PATH] exist?
 - Is Obsidian installed?
 - Is Node.js installed?
@@ -307,7 +328,7 @@ If the path is wrong:
 
 1. Resolve the correct absolute path.
 2. Re-run the MCP add command with the correct path.
-3. Restart or refresh Claude Code.
+3. Restart or refresh Claude.
 4. Verify the MCP.
 5. Continue setup.
 
@@ -330,7 +351,7 @@ Read:
 docs/mcp-setup.md
 ```
 
-Use a path visible to the environment running Claude Code.
+Use a path visible to the environment running Claude.
 
 Example conversion:
 
@@ -372,6 +393,7 @@ Verify required files:
 [VAULT_PATH]/Home.md
 [VAULT_PATH]/00_START_HERE.md
 [VAULT_PATH]/docs/skills-catalog.md
+[VAULT_PATH]/docs/system-contracts.md
 [VAULT_PATH]/.claude/vault-profile.md
 [VAULT_PATH]/.claude/commands/second-brain-capture.md
 [VAULT_PATH]/.claude/commands/link-finder.md
@@ -413,7 +435,214 @@ Do not restart from diagnosis unless needed.
 
 ---
 
-## 12. User wants to start over
+## 12. Co-Work cannot access the installer repository folder
+
+### Symptoms
+
+- Co-Work cannot read `BOOTSTRAP.md`.
+- Co-Work cannot read `CLAUDE.md`.
+- Co-Work only sees the GitHub URL but no local workspace folder.
+- Co-Work summarizes the repo but cannot modify local files.
+
+### Fix
+
+Read:
+
+```text
+docs/cowork-installation.md
+```
+
+Then ask the user to attach or open the installer repository folder as a Co-Work workspace folder.
+
+If the user has not cloned the repository locally, provide the terminal fallback:
+
+```bash
+git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
+cd claude-obsidian-second-brain-installer
+claude .
+```
+
+If Co-Work cannot use local folders in the current session, switch to Claude Code Terminal mode.
+
+---
+
+## 13. Co-Work cannot access or create the target vault folder
+
+### Symptoms
+
+- Co-Work can read the repo but cannot create the vault folder.
+- File creation fails.
+- The user has not attached or approved the parent folder.
+- Co-Work says it lacks access to the destination.
+
+### Fix
+
+1. Ask the user to select or attach a dedicated parent folder for the vault.
+2. Avoid broad folders like the entire home directory.
+3. Ask approval before creating a small test file if needed.
+4. If write access works, continue with Co-Work installation.
+5. If write access does not work, switch to assisted handoff or Claude Code Terminal.
+
+Suggested message:
+
+```text
+I can continue from Co-Work if you give me access to the folder where the vault should live. Otherwise, I will hand this off to Claude Code Terminal.
+```
+
+---
+
+## 14. Co-Work cannot execute commands
+
+### Symptoms
+
+- Co-Work can edit files but cannot run shell commands.
+- Node.js, npx, or Git checks cannot be executed.
+- MCP setup cannot be run from the Co-Work session.
+
+### Fix
+
+Use Co-Work assisted installation:
+
+1. Continue file-based steps from Co-Work if safe.
+2. Provide exact terminal commands for unavailable checks or MCP setup.
+3. Wait for the user to confirm completion.
+4. Continue from the next setup state.
+
+If MCP setup is blocked, provide:
+
+```bash
+claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
+```
+
+If the user is on Windows native and the standard command fails, provide:
+
+```bash
+claude mcp add obsidian-vault -- cmd /c npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
+```
+
+---
+
+## 15. Co-Work cannot configure local MCP
+
+### Symptoms
+
+- Co-Work can access files but not MCP settings.
+- Local MCP is disabled.
+- MCP server cannot be added from Co-Work.
+- Admin or app settings restrict local extensions/MCP.
+
+### Fix
+
+Read:
+
+```text
+docs/cowork-installation.md
+docs/mcp-setup.md
+```
+
+Then switch to assisted MCP setup:
+
+1. Explain that the vault files can be prepared from Co-Work, but MCP setup requires Claude Code Terminal or local settings.
+2. Provide the exact MCP command.
+3. Ask the user to run it from Claude Code Terminal.
+4. Ask them to restart or refresh Claude.
+5. Resume with `continue setup`.
+
+Do not retry indefinitely from Co-Work.
+
+---
+
+## 16. Mobile session cannot install locally
+
+### Symptoms
+
+- User starts from the Claude mobile app.
+- Claude cannot access local folders.
+- Claude cannot run commands.
+- Claude cannot configure MCP.
+
+### Fix
+
+Read:
+
+```text
+docs/mobile-installation.md
+```
+
+Tell the user:
+
+```text
+This installation needs local file access on your computer. From mobile, I can start or coordinate the task, but the vault must be created from Claude Co-Work Desktop or Claude Code Terminal.
+```
+
+Then offer:
+
+```text
+A) Send the task to Claude Co-Work Desktop
+B) Continue from Claude Code Terminal
+```
+
+Do not pretend the mobile session installed the local vault.
+
+---
+
+## 17. Mobile-to-Co-Work handoff fails
+
+### Symptoms
+
+- The user starts from mobile but desktop Co-Work does not receive or continue the task.
+- The desktop computer is asleep or offline.
+- Claude Desktop is not open.
+- Co-Work cannot access the local folders.
+
+### Fix
+
+Ask the user to confirm:
+
+```text
+1. Is your desktop computer awake and online?
+2. Is Claude Desktop open?
+3. Is Co-Work available?
+4. Can Co-Work access the installer repository and vault parent folder?
+```
+
+If not, switch to terminal fallback:
+
+```bash
+git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
+cd claude-obsidian-second-brain-installer
+claude .
+```
+
+---
+
+## 18. Claude App without local access
+
+### Symptoms
+
+- Claude has no local file access.
+- Claude cannot create folders.
+- Claude cannot run commands.
+- Claude cannot configure MCP.
+
+### Fix
+
+Say:
+
+```text
+I can explain the system here, but I cannot install it from this session because I do not have local file access or command execution.
+
+To install it, open Claude Code or Claude Co-Work on your desktop and say:
+
+Install this repository:
+https://github.com/afmanu/claude-obsidian-second-brain-installer
+```
+
+Do not claim installation is possible in that session.
+
+---
+
+## 19. User wants to start over
 
 ### Rule
 
@@ -437,5 +666,5 @@ Recommended approach:
 If the user is stuck, they can paste:
 
 ```text
-I was installing Claude Obsidian Second Brain and something failed. Please read TROUBLESHOOTING.md, inspect the current setup state, identify the last completed step, and continue from there without starting over unless necessary.
+I was installing Claude Obsidian Second Brain and something failed. Please read TROUBLESHOOTING.md, docs/install-modes.md, inspect the current execution mode and setup state, identify the last completed step, and continue from there without starting over unless necessary.
 ```
