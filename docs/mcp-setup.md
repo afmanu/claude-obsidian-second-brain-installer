@@ -8,7 +8,7 @@ Claude must read this file whenever MCP setup, MCP verification, or MCP repair i
 
 ## Purpose
 
-The `obsidian-vault` MCP connects Claude Code to the user's local Obsidian vault.
+The `obsidian-vault` MCP connects Claude to the user's local Obsidian vault.
 
 This connection allows Claude to:
 
@@ -19,13 +19,35 @@ This connection allows Claude to:
 - create generated hub notes,
 - create reports and captures inside the final vault.
 
-Without this MCP, Claude can still write configuration files with the filesystem Write tool, but it cannot reliably operate the vault as an Obsidian knowledge base.
+Without this MCP, Claude can still write configuration files with filesystem access, but it cannot reliably operate the vault as an Obsidian knowledge base.
+
+---
+
+## Execution mode note
+
+MCP setup depends on the current Claude environment.
+
+```text
+Claude Code Terminal
+→ usually supports full MCP setup through `claude mcp add`.
+
+Claude Co-Work Desktop
+→ may support local MCP depending on local access, settings, extensions, and permissions.
+
+Claude Mobile
+→ should not claim direct local MCP setup. Route to Co-Work Desktop or Claude Code Terminal.
+
+Claude App without local access
+→ cannot configure a local Obsidian MCP directly.
+```
+
+If MCP setup is not available in the current environment, switch to the correct handoff mode from `docs/install-modes.md`.
 
 ---
 
 ## Required dependencies
 
-Before configuring the MCP, verify:
+Before configuring the MCP, verify when command execution is available:
 
 ```bash
 node --version
@@ -37,7 +59,7 @@ Required:
 
 - Node.js is installed.
 - `npx` is available.
-- Claude Code is installed and available in the terminal.
+- Claude Code is installed and available in the terminal when using terminal mode.
 - `[VAULT_PATH]` exists and is writable.
 
 If Node.js or `npx` is missing, repair that before installing the MCP.
@@ -61,16 +83,52 @@ Rules:
 
 ---
 
+## Windows native fallback
+
+On Windows native, if the standard `npx` command fails or the MCP connection closes unexpectedly, try:
+
+```bash
+claude mcp add obsidian-vault -- cmd /c npx -y @bitbonsai/mcpvault@latest "[VAULT_PATH]"
+```
+
+Use this only when appropriate for Windows native environments.
+
+Do not use this in macOS, Linux, or WSL unless there is a clear reason.
+
+---
+
+## Co-Work MCP behavior
+
+If running in Claude Co-Work Desktop:
+
+1. Check whether local MCP setup is available.
+2. Check whether Co-Work can access the target vault folder.
+3. Check whether Co-Work can run or coordinate the MCP command.
+4. If it can, proceed with MCP setup.
+5. If it cannot, switch to assisted handoff mode from `docs/cowork-installation.md`.
+
+Suggested message:
+
+```text
+Co-Work may not have enough local MCP access in this session.
+
+I can continue guiding the installation, but the MCP setup may need to be completed from Claude Code Terminal.
+```
+
+Then provide the exact command for the user's operating system.
+
+---
+
 ## Activation behavior
 
-After adding the MCP, Claude Code may need to restart or refresh before the MCP is available.
+After adding the MCP, Claude may need to restart or refresh before the MCP is available.
 
 Tell the user:
 
 ```text
 The MCP connection has been configured.
 
-Restart or refresh Claude Code so the connection activates.
+Restart or refresh Claude so the connection activates.
 
 When you are back, open this repository again and say:
 continue setup
@@ -107,7 +165,7 @@ The Obsidian MCP connection is not available yet. I will diagnose the MCP setup 
 
 ## Diagnosis commands
 
-Use these commands when diagnosing MCP issues:
+Use these commands when diagnosing MCP issues and command execution is available:
 
 ```bash
 node --version
@@ -175,7 +233,7 @@ Symptoms:
 
 Fix:
 
-1. Ask the user to restart or refresh Claude Code.
+1. Ask the user to restart or refresh Claude.
 2. Reopen this installer repository.
 3. Ask the user to say `continue setup`.
 4. Verify the MCP again.
@@ -200,7 +258,7 @@ Fix:
 claude mcp add obsidian-vault -- npx -y @bitbonsai/mcpvault@latest "[CORRECT_VAULT_PATH]"
 ```
 
-4. Restart or refresh Claude Code.
+4. Restart or refresh Claude.
 5. Verify the MCP again.
 
 ---
@@ -241,15 +299,17 @@ becomes:
 When MCP setup fails, follow this repair flow:
 
 ```text
-1. Identify whether the failure is Node, npx, Claude Code, vault path, restart, or MCP server.
+1. Identify whether the failure is Node, npx, Claude Code, vault path, restart, environment capability, or MCP server.
 2. Fix the earliest failing dependency.
-3. Re-run the MCP add command if needed.
-4. Restart or refresh Claude Code.
+3. Re-run the MCP add command if needed and available.
+4. Restart or refresh Claude.
 5. Verify the MCP by listing the vault root.
 6. Continue setup from the last valid state.
 ```
 
 Do not restart the whole installation unless the vault path or profile setup is unrecoverable.
+
+If the current environment cannot configure MCP, switch to the correct handoff mode instead of retrying indefinitely.
 
 ---
 

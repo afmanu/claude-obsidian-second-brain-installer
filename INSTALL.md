@@ -1,30 +1,40 @@
 # Installation Guide
 
-This guide explains how to install Claude Obsidian Second Brain.
+This guide explains how to install Claude Obsidian Second Brain from Claude Code Terminal, Claude Co-Work Desktop, or Claude Mobile routed to Co-Work.
 
-Claude Obsidian Second Brain is a Claude Code guided installer for building a personalized Obsidian second brain.
+Claude Obsidian Second Brain is a Claude-guided installer for building a personalized Obsidian second brain.
 
 ---
 
 ## Recommended installation
 
-Open Claude Code and paste this prompt:
+The shortest request is enough:
+
+```text
+Install this repository:
+https://github.com/afmanu/claude-obsidian-second-brain-installer
+```
+
+Claude should read `BOOTSTRAP.md`, detect the execution environment, and choose the correct installation mode.
+
+For a stricter installation request, paste this:
 
 ```text
 I want to install this Obsidian second brain system:
 
-https://github.com/afmanu/obsidian-sppf-vault
+https://github.com/afmanu/claude-obsidian-second-brain-installer
 
 Please do the following:
 
 1. Clone or access the repository.
-2. Read its README.md and CLAUDE.md files.
-3. Follow the repository instructions exactly.
-4. Guide me step by step through the full setup.
-5. Ask me one question at a time.
-6. Do not skip environment checks.
-7. Do not create or modify files outside the intended repository or vault path unless you explain it first and ask for my approval.
-8. After setup, verify that the final vault contains all required files, folders, commands, and configuration.
+2. Read BOOTSTRAP.md, docs/install-modes.md, README.md, INSTALL.md, and CLAUDE.md.
+3. Detect whether I am using Claude Code Terminal, Claude Co-Work Desktop, Claude Mobile, or Claude App without local access.
+4. Follow the correct installation mode.
+5. Guide me step by step through the full setup or handoff.
+6. Ask me one question at a time.
+7. Do not skip environment checks.
+8. Do not create or modify files outside the intended repository or vault path unless you explain it first and ask for my approval.
+9. After setup, verify that the final vault contains all required files, folders, commands, and configuration.
 ```
 
 Spanish version:
@@ -32,19 +42,47 @@ Spanish version:
 ```text
 Quiero instalar este sistema de segundo cerebro para Obsidian:
 
-https://github.com/afmanu/obsidian-sppf-vault
+https://github.com/afmanu/claude-obsidian-second-brain-installer
 
 Haz lo siguiente:
 
 1. Accede o clona el repositorio.
-2. Lee sus archivos README.md y CLAUDE.md.
-3. Sigue exactamente las instrucciones del repositorio.
-4. Guíame paso por paso durante toda la instalación.
-5. Hazme una sola pregunta cada vez.
-6. No saltes ninguna comprobación del entorno.
-7. No crees ni modifiques archivos fuera del repositorio o del vault previsto sin explicarme antes qué vas a hacer y pedirme aprobación.
-8. Al terminar, verifica que el vault final contiene todos los archivos, carpetas, comandos y configuración necesarios.
+2. Lee BOOTSTRAP.md, docs/install-modes.md, README.md, INSTALL.md y CLAUDE.md.
+3. Detecta si estoy usando Claude Code Terminal, Claude Co-Work Desktop, Claude Mobile o Claude App sin acceso local.
+4. Sigue el modo de instalación correcto.
+5. Guíame paso por paso durante la instalación o el handoff.
+6. Hazme una sola pregunta cada vez.
+7. No saltes ninguna comprobación del entorno.
+8. No crees ni modifiques archivos fuera del repositorio o del vault previsto sin explicarme antes qué vas a hacer y pedirme aprobación.
+9. Al terminar, verifica que el vault final contiene todos los archivos, carpetas, comandos y configuración necesarios.
 ```
+
+---
+
+## Installation modes
+
+Claude should read:
+
+```text
+docs/install-modes.md
+```
+
+and choose one of these modes:
+
+```text
+Mode A — Claude Code Terminal
+Mode B — Claude Co-Work Desktop
+Mode C — Claude Mobile -> Co-Work Desktop
+Mode D — Claude App without local access
+```
+
+Mode A is the most reliable full-installation mode.
+
+Mode B can install directly when Co-Work has local folder access, file write access, command execution, and MCP capability. If not, it should use assisted handoff.
+
+Mode C starts from mobile but routes the actual local installation to desktop Co-Work or Claude Code Terminal.
+
+Mode D cannot install locally and should route the user to Claude Code or Co-Work.
 
 ---
 
@@ -53,24 +91,27 @@ Haz lo siguiente:
 Claude should:
 
 1. Clone or access the repository.
-2. Read `README.md`.
-3. Read `CLAUDE.md`.
-4. Read the repository specs and recovery docs.
-5. Start the setup wizard.
-6. Check whether Obsidian is installed.
-7. Create or confirm your vault folder.
-8. Check whether Node.js and `npx` are installed.
-9. Configure the Obsidian MCP connection.
-10. Ask you to restart Claude Code if needed.
-11. Continue setup after restart.
-12. Run `/vault-install`.
-13. Ask diagnostic questions about your work, projects, and capture needs.
-14. Recommend a personalized vault profile.
-15. Ask which language you want for your vault.
-16. Build your personalized vault structure.
-17. Install the core vault skills.
-18. Verify the final vault.
-19. Hand you off to the final vault folder.
+2. Read `BOOTSTRAP.md`.
+3. Read `docs/install-modes.md`.
+4. Read `README.md`.
+5. Read `CLAUDE.md`.
+6. Read the repository specs and recovery docs.
+7. Detect execution mode.
+8. Start the matching setup workflow.
+9. Check whether Obsidian is installed when local access is available.
+10. Create or confirm your vault folder.
+11. Check whether Node.js and `npx` are installed when command execution is available.
+12. Configure the Obsidian MCP connection when possible.
+13. Ask you to restart or refresh Claude if needed.
+14. Continue setup after restart.
+15. Run `/vault-install` once MCP is verified.
+16. Ask diagnostic questions about your work, projects, and capture needs.
+17. Recommend a personalized vault profile.
+18. Ask which language you want for your vault.
+19. Build your personalized vault structure.
+20. Install the core vault skills.
+21. Verify the final vault.
+22. Hand you off to the final vault folder.
 
 ---
 
@@ -79,10 +120,14 @@ Claude should:
 Claude should use these files during installation:
 
 ```text
+BOOTSTRAP.md
 README.md
 CLAUDE.md
 INSTALL.md
 TROUBLESHOOTING.md
+docs/install-modes.md
+docs/cowork-installation.md
+docs/mobile-installation.md
 docs/mcp-setup.md
 docs/recovery-prompts.md
 specs/vault-output-contract.md
@@ -93,7 +138,9 @@ specs/setup-state-machine.md
 
 ---
 
-## Requirements
+## Requirements by mode
+
+### Claude Code Terminal
 
 Required:
 
@@ -103,32 +150,34 @@ Required:
 - Terminal access.
 - Permission to create local folders.
 
-Installed automatically or guided by Claude when possible:
+### Claude Co-Work Desktop
 
-- Obsidian.
-- Node.js.
-- MCP connection to the vault.
+Required:
 
-Recommended:
+- Claude Co-Work available.
+- Access to the installer repository folder.
+- Access to the target parent folder for the vault.
+- Permission to create and modify files in approved folders.
 
-- Basic comfort approving terminal commands.
-- A clean folder where your vault can be created.
+For full local installation, Co-Work also needs command execution and MCP setup capability. If unavailable, it should use assisted handoff.
 
-Windows and WSL users may need additional path configuration if Obsidian runs on Windows but Claude Code runs inside WSL. See `docs/mcp-setup.md` for MCP and path guidance.
+### Claude Mobile
+
+Mobile can start or coordinate installation, but the actual local vault installation requires Claude Co-Work Desktop or Claude Code Terminal.
 
 ---
 
-## Manual fallback
+## Manual terminal fallback
 
-If Claude cannot clone the repository automatically, run this manually:
+If Claude cannot clone or access the repository automatically, run this manually:
 
 ```bash
-git clone https://github.com/afmanu/obsidian-sppf-vault.git
-cd obsidian-sppf-vault
+git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
+cd claude-obsidian-second-brain-installer
 claude .
 ```
 
-Claude should then read `CLAUDE.md` and start the setup wizard.
+Claude should then read `BOOTSTRAP.md`, `CLAUDE.md`, and start the setup workflow.
 
 ---
 
@@ -150,6 +199,7 @@ CLAUDE.md
     explore-skills.md
 docs/
   skills-catalog.md
+  system-contracts.md
 [personalized folders based on your selected profile]
 ```
 
@@ -165,7 +215,7 @@ specs/vault-output-contract.md
 
 ## After installation
 
-After setup, stop opening this repository in Claude Code.
+After setup, stop opening this repository as the active workspace unless you want to update or reinstall the system.
 
 Open your final Obsidian vault instead:
 
@@ -191,6 +241,8 @@ Claude should read:
 TROUBLESHOOTING.md
 specs/setup-state-machine.md
 docs/mcp-setup.md
+docs/cowork-installation.md
+docs/mobile-installation.md
 docs/recovery-prompts.md
 ```
 
@@ -199,7 +251,10 @@ Common failure points are:
 - Git cannot clone the repository.
 - Obsidian is not installed and cannot be installed automatically.
 - Node.js or `npx` is missing.
-- The MCP connection does not activate until Claude Code restarts.
+- The MCP connection does not activate until Claude restarts or refreshes.
+- Co-Work does not have access to the target folder.
+- Co-Work cannot configure local MCP.
+- Mobile cannot install locally and needs desktop handoff.
 - Windows/WSL paths do not match the Obsidian vault location.
 - The final vault is missing expected files.
 
