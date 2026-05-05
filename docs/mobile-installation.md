@@ -97,15 +97,17 @@ If Co-Work is unavailable or cannot access local files, tell the user:
 ```text
 This installation needs local file access. Please continue from Claude Code on your computer.
 
-Open your terminal and run:
+Open your terminal and run the commands below.
+
+Claude Code will read the repository and start the guided installation.
+```
+
+Then provide:
 
 ```bash
 git clone https://github.com/afmanu/claude-obsidian-second-brain-installer.git
 cd claude-obsidian-second-brain-installer
 claude .
-```
-
-Claude Code will read the repository and start the guided installation.
 ```
 
 ---
