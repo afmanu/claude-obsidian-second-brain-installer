@@ -13,7 +13,7 @@ Crear contenido a partir de trabajo, decisiones y aprendizajes reales.
 
 ## Serie activa
 
-- [[Content/Serie sobre sistemas de IA]]
+- [[04_Marketing/Content/Serie sobre sistemas de IA]]
 
 ## Cadencia
 

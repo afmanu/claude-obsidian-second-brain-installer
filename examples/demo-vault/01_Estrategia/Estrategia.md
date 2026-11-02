@@ -19,4 +19,4 @@ Ayudar a profesionales independientes a convertir notas dispersas en conocimient
 
 ## Decisiones
 
-- [[Decisiones/Publicar una vez por semana]]
+- [[01_Estrategia/Decisiones/Publicar una vez por semana]]
