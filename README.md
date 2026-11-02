@@ -12,6 +12,45 @@ You give Claude this repository, Claude detects the current environment, chooses
 
 ---
 
+## The problem it solves
+
+Starting an Obsidian vault is easy. Designing a useful second-brain system is not. New users must decide how to organize notes, capture information, connect ideas, review projects and make an AI work safely with the vault.
+
+This installer turns those decisions into a guided setup. It builds a personalized starting system and verifies that the resulting vault is ready to use.
+
+## What you get
+
+The final result is a separate local Obsidian vault containing:
+
+- a personalized folder and note structure;
+- capture, linking and synthesis workflows;
+- reusable Claude commands and skills;
+- profile and configuration files;
+- an operating structure for projects, knowledge and reviews;
+- a verified handoff explaining where to continue working.
+
+The installer repository is not the final vault. Claude creates the real vault in the destination selected by the user.
+
+## Example uses
+
+After installation, you can ask Claude to:
+
+- capture an insight, decision, meeting or reference as a linked note;
+- find orphan notes and suggest meaningful connections;
+- synthesize patterns across projects and knowledge;
+- identify stalled projects and propose next actions;
+- conduct a weekly review;
+- turn a URL or rough meeting notes into structured vault content;
+- build additional vault skills when a new workflow is needed.
+
+Try:
+
+```text
+Capture this idea in my second brain and connect it with the most relevant existing notes.
+```
+
+---
+
 ## Before you start
 
 This installer is designed for people who want a guided setup rather than a one-click app.
@@ -199,7 +238,7 @@ The setup flow is:
 
 ---
 
-## What you get
+## Included vault skills
 
 ### Core vault skills
 
