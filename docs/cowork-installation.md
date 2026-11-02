@@ -11,7 +11,8 @@ Co-Work installation is supported, but it depends on local folder access and ava
 When a user says something like:
 
 ```text
-Install this repository:
+Quiero instalar este sistema de segundo cerebro:
+
 https://github.com/afmanu/claude-obsidian-second-brain-installer
 ```
 
@@ -45,28 +46,33 @@ If any required capability is unavailable, do not fail silently. Explain the mis
 
 ---
 
-## Initial Co-Work message
+## Automatic Co-Work start
 
-Say:
+The user has already requested installation. Do not ask whether they want to continue.
 
-```text
-I can install Claude Obsidian Second Brain from Co-Work if I have access to the required local folders.
+Proceed in this order:
 
-First I need to confirm two things:
+1. Try to access the repository from the supplied GitHub URL.
+2. Read BOOTSTRAP.md and docs/install-modes.md.
+3. Confirm from the current session that the runtime is Co-Work Desktop.
+4. Inspect available folder, command, and MCP capabilities without writing files.
+5. If the repository cannot be accessed from the URL, ask the user to download or attach the repository folder. This is a capability fallback, not a request for a better prompt.
+6. If the target vault parent folder is unknown, ask the user to select one dedicated folder.
+7. Request approval immediately before the first write, package installation, configuration change, or test-file creation.
 
-1. I can access this installer repository as a workspace folder.
-2. I can access or create the folder where your Obsidian vault will live.
+Use this concise first message:
 
-Do you want to continue from Co-Work Desktop? [yes / use terminal instead]
-```
+~~~text
+I found the installer and I am checking the Co-Work environment now. I will ask you only for the destination folder, personalization choices, or approval before making changes.
+~~~
 
-If the user chooses terminal, give the Claude Code Terminal command flow from `INSTALL.md`.
+Do not repeat the repository instructions to the user unless a capability is missing.
 
 ---
 
 ## Capability check
 
-Before installation, check or ask:
+Before installation, inspect these capabilities directly when possible. Ask only about an item that cannot be determined from the current session:
 
 ```text
 1. Can I read README.md, INSTALL.md, CLAUDE.md, and BOOTSTRAP.md?
