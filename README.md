@@ -322,3 +322,8 @@ This system does not require uploading your vault to GitHub.
 ## Installation guide
 
 For the full installation flow, see [`INSTALL.md`](INSTALL.md).
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
