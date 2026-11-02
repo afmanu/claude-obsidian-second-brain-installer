@@ -2,12 +2,29 @@
 
 > A Claude-guided installer for building a personalized Obsidian second brain.
 
+> **Status: public beta.** The guided flow is ready for testing with real users. Full installation requires desktop access through Claude Code or Claude Co-Work; mobile can start the process but cannot create the local vault by itself.
+>
+> [Guía rápida en español](QUICKSTART-ES.md) · [Preview the demo vault](examples/demo-vault/README.md) · [Primeros 10 minutos](docs/primeros-10-minutos.md)
+
 Claude Obsidian Second Brain is not just an Obsidian template. It is a guided installation system for Claude Code, Claude Co-Work, and mobile-started Co-Work tasks.
 
 You give Claude this repository, Claude detects the current environment, chooses the safest installation mode, checks your local setup, creates your Obsidian vault when local access is available, connects it through MCP when possible, asks a few diagnostic questions, builds a personalized structure, and installs reusable AI skills inside the vault.
 
 ---
 
+## Before you start
+
+This installer is designed for people who want a guided setup rather than a one-click app.
+
+- You need Obsidian and a desktop environment with local file access.
+- Claude Code Terminal is the most reliable full-installation mode.
+- Claude Co-Work can install directly when local folder, command, and MCP access are available.
+- Mobile can initiate the task, but the local vault must be created from desktop.
+- The installer asks before creating the vault and verifies the result before handoff.
+
+If you want to see the expected experience first, open the [synthetic demo vault](examples/demo-vault/README.md).
+
+---
 ## Quick start
 
 You do not need a perfect prompt.
@@ -276,6 +293,20 @@ Windows and WSL users may need additional path configuration if Obsidian runs on
 
 ---
 
+## Preview before installing
+
+The repository includes a small synthetic vault under [examples/demo-vault](examples/demo-vault/README.md). It is not a replacement for the installer and contains no personal data. Open that folder as an Obsidian vault to preview:
+
+- a home dashboard,
+- connected strategy, product, customer, marketing, and learning notes,
+- the kind of links that appear in Graph View,
+- and a realistic first result without exposing a real user's notes.
+
+For the first session after installation, follow [Primeros 10 minutos](docs/primeros-10-minutos.md).
+
+Installation problems can be reported with the [installation issue template](https://github.com/afmanu/claude-obsidian-second-brain-installer/issues/new?template=installation-problem.md). Never include credentials, API keys, or private vault content in an issue.
+
+---
 ## Privacy
 
 This system creates files locally in your Obsidian vault.
@@ -291,3 +322,8 @@ This system does not require uploading your vault to GitHub.
 ## Installation guide
 
 For the full installation flow, see [`INSTALL.md`](INSTALL.md).
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
