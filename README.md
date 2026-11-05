@@ -2,7 +2,7 @@
 
 > A Claude-guided installer for building a personalized Obsidian second brain.
 
-> **Status: public beta.** The guided flow is ready for testing with real users. Full installation requires desktop access through Claude Code or Claude Co-Work; mobile can start the process but cannot create the local vault by itself.
+> **Status: public beta.** A first external tester completed a link-only blind installation successfully. Runtime-specific verification is still in progress. Full installation requires desktop access through Claude Code or Claude Co-Work; mobile can start the process but cannot create the local vault by itself.
 >
 > [Guía rápida en español](QUICKSTART-ES.md) · [Preview the demo vault](examples/demo-vault/README.md) · [Primeros 10 minutos](docs/primeros-10-minutos.md)
 

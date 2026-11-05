@@ -2,6 +2,14 @@
 
 Use this checklist to test a clean installation before describing a mode as verified.
 
+## External blind validation
+
+| Date | Prompt | Outcome | Runtime details |
+|---|---|---|---|
+| 2026-11-05 | Repository link only | Installation reported complete with no issues | Not recorded |
+
+This confirms that an external user can trigger and complete the installation from the repository link alone. It does not verify a specific environment row below because the operating system, Claude runtime and installation mode were not recorded.
+
 ## Test environments
 
 Record at least one real run for each supported path:
