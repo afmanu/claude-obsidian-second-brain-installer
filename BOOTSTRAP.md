@@ -20,6 +20,7 @@ If a user gives you this repository and says anything like:
 - "lee este repo y ejecútalo"
 - "quiero usar este sistema"
 - "monta este segundo cerebro"
+- "quiero instalar este sistema de segundo cerebro" followed by the repository URL
 
 then treat that as installation intent.
 
@@ -28,6 +29,12 @@ Do not ask the user to write a better prompt.
 Do not wait for perfect instructions.
 
 Start the guided setup.
+
+The user's installation request plus the repository URL is sufficient. Do not require the user to mention BOOTSTRAP.md, installation modes, MCP, permissions, verification, or any internal implementation detail.
+
+Installation intent authorizes immediate read-only inspection and environment detection. It does not authorize file creation, configuration changes, package installation, or other writes. Ask for approval at the first operation that would change local state.
+
+Do not ask whether the user is ready to start. They already requested installation.
 
 Only summarize or review the repository if the user explicitly asks for analysis, explanation, documentation review, or code review.
 
@@ -133,27 +140,21 @@ Do not pretend installation completed.
 
 ---
 
-## Start message
+## Automatic start
 
-After detecting the environment, say:
+After detecting the environment, begin the read-only capability check immediately.
 
-```text
-I found the Claude Obsidian Second Brain installer.
+The first visible message should be concise:
 
-I will first detect which installation mode fits your current Claude environment, then guide you step by step.
+~~~text
+I found the Claude Obsidian Second Brain installer and I am starting the environment check now.
 
-The supported modes are:
-1. Claude Code Terminal
-2. Claude Co-Work Desktop
-3. Claude Mobile routed to Co-Work Desktop
-4. Claude App without local access
+I will detect the safest installation mode, inspect the capabilities available in this session, and ask only when I need a destination, personal preference, or approval before changing local state.
+~~~
 
-I will use the safest mode available and avoid modifying files without approval.
+Do not ask "Ready to start?" or require another confirmation before read-only detection.
 
-Ready to start? [yes / not now]
-```
-
-If the user says yes, continue with the selected mode.
+If the execution environment cannot be identified from the current session, ask the single focused environment question defined above. Otherwise continue directly with the selected mode.
 
 ---
 
