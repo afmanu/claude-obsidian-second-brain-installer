@@ -28,17 +28,24 @@ Claude Code es actualmente el modo más fiable. Desde móvil puedes iniciar la t
 
 ## Instalación recomendada
 
-Abre Claude Code o Claude Co-Work y pega:
+Abre Claude Code o Claude Co-Work Desktop y envía únicamente:
 
 ~~~text
-Quiero instalar este sistema de segundo cerebro para Obsidian:
+Quiero instalar este sistema de segundo cerebro:
 
 https://github.com/afmanu/claude-obsidian-second-brain-installer
-
-Lee BOOTSTRAP.md y sigue el modo de instalación adecuado para mi entorno. Hazme una sola pregunta cada vez, explícame antes de modificar archivos y verifica el vault completo antes de terminar.
 ~~~
 
-Claude debe detectar el entorno, explicar el modo elegido y pedir confirmación antes de crear el vault.
+No necesitas mencionar BOOTSTRAP.md, MCP, permisos ni pasos internos. El repositorio contiene esas instrucciones.
+
+Claude debe comenzar automáticamente con una comprobación de solo lectura. Después solo debería preguntarte por decisiones que no puede tomar por ti:
+
+- dónde crear el vault;
+- qué quieres organizar;
+- qué idioma prefieres;
+- y si apruebas una operación que modificará el equipo.
+
+Si Claude se limita a resumir el repositorio, la detección de intención ha fallado. Usa entonces el prompt de recuperación de docs/recovery-prompts.md.
 
 ## Alternativa desde terminal
 

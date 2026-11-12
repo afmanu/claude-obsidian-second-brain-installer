@@ -1,5 +1,8 @@
 # Claude Obsidian Second Brain
 
+> [!IMPORTANT]
+> **Minimal install request:** when a user gives Claude this repository and says they want to install the second brain, that message is sufficient installation intent. Claude must read BOOTSTRAP.md and start environment detection automatically. It must not merely summarize the repository or ask the user to provide a more detailed prompt.
+
 > A Claude-guided installer for building a personalized Obsidian second brain.
 
 > **Status: public beta.** A first external tester completed a link-only blind installation successfully. Runtime-specific verification is still in progress. Full installation requires desktop access through Claude Code or Claude Co-Work; mobile can start the process but cannot create the local vault by itself.
@@ -66,29 +69,19 @@ If you want to see the expected experience first, open the [synthetic demo vault
 ---
 ## Quick start
 
-You do not need a perfect prompt.
+Open Claude Code or Claude Co-Work Desktop and send only:
 
-Open Claude Code, Claude Co-Work, or Claude mobile and say something simple like:
+~~~text
+Quiero instalar este sistema de segundo cerebro:
 
-```text
-Install this repository:
 https://github.com/afmanu/claude-obsidian-second-brain-installer
-```
+~~~
 
-or:
+No additional instructions are required. Claude should treat the message and repository URL as installation intent, read BOOTSTRAP.md, detect the current environment, and begin the guided setup automatically.
 
-```text
-I want to install this Obsidian second brain system:
-https://github.com/afmanu/claude-obsidian-second-brain-installer
-```
+Claude may still ask for decisions that only the user can make, such as the destination folder, profile details, language, and approval before writing files.
 
-Claude should treat that as installation intent, read the repository instructions, detect your environment, and start the guided setup or the correct handoff flow.
-
-If Claude only summarizes the repository instead of installing it, say:
-
-```text
-Do not summarize it. Read BOOTSTRAP.md, docs/install-modes.md, README.md, INSTALL.md, and CLAUDE.md, then start the installation workflow.
-```
+If Claude summarizes the repository instead of starting, that is an installation-routing failure. Use the recovery prompt in [docs/recovery-prompts.md](docs/recovery-prompts.md).
 
 ---
 
@@ -164,52 +157,17 @@ This may not be ideal if you do not want to use Obsidian, prefer a mobile-only s
 
 ## Install with Claude
 
-The short version is enough:
+The complete user prompt is:
 
-```text
-Install this repository:
-https://github.com/afmanu/claude-obsidian-second-brain-installer
-```
-
-For a stricter installation request, paste this:
-
-```text
-I want to install this Obsidian second brain system:
+~~~text
+Quiero instalar este sistema de segundo cerebro:
 
 https://github.com/afmanu/claude-obsidian-second-brain-installer
+~~~
 
-Please do the following:
+The repository carries the rest of the instructions. Claude should start with BOOTSTRAP.md, perform read-only environment detection immediately, and ask only for information or approval that cannot be inferred safely.
 
-1. Clone or access the repository.
-2. Read BOOTSTRAP.md, docs/install-modes.md, README.md, INSTALL.md, and CLAUDE.md.
-3. Detect whether I am using Claude Code Terminal, Claude Co-Work Desktop, Claude Mobile, or Claude App without local access.
-4. Follow the correct installation mode.
-5. Guide me step by step through the full setup or handoff.
-6. Ask me one question at a time.
-7. Do not skip environment checks.
-8. Do not create or modify files outside the intended repository or vault path unless you explain it first and ask for my approval.
-9. After setup, verify that the final vault contains all required files, folders, commands, and configuration.
-```
-
-Spanish version:
-
-```text
-Quiero instalar este sistema de segundo cerebro para Obsidian:
-
-https://github.com/afmanu/claude-obsidian-second-brain-installer
-
-Haz lo siguiente:
-
-1. Accede o clona el repositorio.
-2. Lee BOOTSTRAP.md, docs/install-modes.md, README.md, INSTALL.md y CLAUDE.md.
-3. Detecta si estoy usando Claude Code Terminal, Claude Co-Work Desktop, Claude Mobile o Claude App sin acceso local.
-4. Sigue el modo de instalación correcto.
-5. Guíame paso por paso durante la instalación o el handoff.
-6. Hazme una sola pregunta cada vez.
-7. No saltes ninguna comprobación del entorno.
-8. No crees ni modifiques archivos fuera del repositorio o del vault previsto sin explicarme antes qué vas a hacer y pedirme aprobación.
-9. Al terminar, verifica que el vault final contiene todos los archivos, carpetas, comandos y configuración necesarios.
-```
+For the Spanish user guide, see [QUICKSTART-ES.md](QUICKSTART-ES.md). If routing fails, use [docs/recovery-prompts.md](docs/recovery-prompts.md).
 
 ---
 
